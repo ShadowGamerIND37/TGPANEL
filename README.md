@@ -118,12 +118,12 @@ graph TD
 ### 5. 💻 Modernized `menu.sh` Management Interface
 - **Official ASCII Banner**: Striking cyberpunk ASCII art header upon launching `./menu.sh`:
   ```
-  ███╗   ███╗██████╗  █████╗ ███╗   ██╗███████╗██╗     
-  ████╗ ████║██╔══██╗██╔══██╗████╗  ██║██╔════╝██║     
-  ██╔████╔██║██████╔╝███████║██╔██╗ ██║█████╗  ██║     
-  ██║╚██╔╝██║██╔═══╝ ██╔══██║██║╚██╗██║██╔══╝  ██║     
-  ██║ ╚═╝ ██║██║     ██║  ██║██║ ╚████║███████╗███████╗
-  ╚═╝     ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝
+      ██████╗ ██████╗ ██╗███╗   ███╗███████╗   
+      ██╔══██╗██╔══██╗██║████╗ ████║██╔════╝   
+      ██████╔╝██████╔╝██║██╔████╔██║█████╗║    
+      ██╔═══╝ ██╔══██╗██║██║╚██╔╝██║██╔══╝     
+      ██║     ██║  ██║██║██║ ╚═╝ ██║███████╗   
+      ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝   
   ```
 - **Live System Telemetry Dashboard**: Real-time display of Public IP, Local Network IP, Active Port Matrix (`3001`, `3003`, `3004`, `27017`), and PM2 Daemon status (`ONLINE` / `STOPPED`).
 - **Structured Modular Menus**: Main Menu, PM2 Process Suite, and Database Management menus with intuitive numeric selection.
@@ -133,104 +133,6 @@ graph TD
 
 ### 7. 🖥️ VM - KVM / No-KVM Virtualization Architecture
 - Clean branding upgrade replacing legacy LumenVM with transparent **VM - KVM** (hardware-assisted kernel virtualization) and **No-KVM** (lightweight isolated containerization) presets across the server wizard and management console.
-
----
-
-## ✨ What is New in v2.5.0
-
-### 1. 🔄 System Updates & Auto-Detection Engine
-- **GitHub Releases Auto-Detection**: Real-time checking against [ShadowGamerIND37/Prime Panel/releases](https://github.com/ShadowGamerIND37/Prime Panel/releases) with semver comparison.
-- **Dedicated Updates Dashboard (`#admin-updates`)**:
-  - Displays Installed Version vs Latest Release tag.
-  - Formatted Markdown Changelog reader and Release History accordion.
-  - Instant **"Check for Updates"** manual refresh button.
-- **Interactive Live Update Terminal ("live update tarmil")**:
-  - Full-featured embedded `xterm.js` terminal with cyber styling, auto-scrolling, clear screen, and log copying.
-  - Streams update execution line-by-line in real-time over WebSocket (`/ws/admin/updates`).
-  - **6-Step Pipeline Visualizer**: Pre-flight Verification ➔ Git Sync ➔ Dependencies (npm install) ➔ Database Migration ➔ PM2 Reload ➔ Health Verification.
-  - Action buttons: "Start System Update (Full Auto)", "Sync Dependencies & Schema", "Check Git Status".
-- **Global System Overview Integration (`#admin-overview`)**:
-  - Titlebar Version Pill (`v2.5.0`) & dynamic Update Status Pill (`Up-to-Date` or `Update Available`).
-  - High-visibility **Prime Panel Release & Update Status Banner** with 1-click update actions.
-  - Sidebar navigation notification badge (`UPDATE`).
-
-### 2. 🎓 Interactive Auto Tutorials Engine (No Static Pages)
-- **Auto-Guided Spotlight Tours (`public/js/autoTutorial.js`)**:
-  - Focused backdrop lighting with pulsing highlight rings around active UI controls.
-  - 7-second countdown auto-progression bar, pause/resume, audio chimes, and keyboard navigation (`Esc`, arrow keys, `Space`).
-  - Includes **Client Portal Tour (`panel-tour`)** and **Server Console Tour (`server-tour`)**.
-- **Live Configuration Simulators (`public/js/knowledge.js`)**:
-  - **SFTP URI Generator**: Instant connection strings and commands for FileZilla & Cyberduck on Port `3004`.
-  - **Minecraft Aikar GC RAM Calculator**: Interactive slider (1GB–64GB) calculating heap and GC flags dynamically.
-  - **MariaDB Configuration YAML Generator**: Dynamic database config snippet generator for Port `27017`.
-- **Admin ON/OFF Controls**:
-  - Toggle Tutorials portal visibility in Admin Settings.
-  - Toggle automatic first-login tour for new users with an instant admin "Test Tour" button.
-- **Pure Naming**: Zero references to "Knowledge Base" across all user-facing UI, database settings, and modals.
-
-### 3. 🎨 PteroX V2.0.2 Theme Suite
-- **Complete Visual Assets**: High-resolution branding logos, status illustrations, and server card banners.
-- **Theme Palette & Layouts**: Deep space dark mode (`#111525`), primary cyan (`#23aeea`), and accent orange (`#ff5108`).
-
-### 4. 🛠️ McTools Blueprint Extension Suite
-- **Integrated Extension**: Directly ported from [`ShadowGamerIND37/Cloud (mctools.blueprint)`](https://github.com/ShadowGamerIND37/Cloud/blob/main/thame/Extension/mctools.blueprint).
-- **Live MOTD & Colored Text Builder**: Real-time Minecraft colored text builder (Sign, Book, Chat, MOTD) with live dark preview box and instant copy in Legacy (`&`), Section (`§`), Tellraw/JSON, and MiniMessage.
-- **Color Palette & Swatches**: Official 16 Minecraft colors with hex codes, RGB picker, and Bungee hex formatting (`&x&r&r&g&g&b&b`).
-- **SmallCaps & Unicode Decorative Fonts**: Real-time styler for SmallCaps, BigCaps, Bubble, Fraktur, FullWidth, Script, and Tiny fonts.
-- **1,200+ Minecraft Registry Directory**: Fast searchable registry of 1,228 Items & Blocks, 149 Entities, 113 Particles, 1,651 Game Sounds, 42 Enchantments, and 40 Effects with 1-click `/give`, `/summon`, and `/particle` copy.
-- **Inventory Slot Maps & Emojis**: Interactive slot indices for Chests, Hoppers, Furnaces, and Brewing Stands, plus 1,900+ Minecraft symbols.
-- **1-Click Download**: Download `mctools.blueprint` directly from the Addon Marketplace.
-
----
-
-## 🧩 Core Features & Capabilities
-
-### 1. 👥 Minecraft Player Manager (Live Monitoring & Offline Roster)
-- **Live Player Roster**: Connected players with live ping, gamemode, health, food bar, XP level, and UUID.
-- **🎒 Interactive Live Inventory Viewer**: Inspect armor slots, offhand, main inventory, and ender chest with item icons, stack counts, and durability.
-- **📊 Detailed Player Statistics**: In-depth tracking of mob kills, blocks mined, items crafted, and distance traveled.
-- **🏆 Advancements & Achievements Tracker**: Complete advancement tree tracking across Story, Nether, The End, Adventure, and Husbandry.
-- **⚡ Live Moderation Actions**: Instant Kick, Ban, Pardon, IP-Ban, OP (Levels 1–4), and DEOP.
-- **🛡️ Full Offline Support**: Add/remove Whitelist entries, manage Operators, and ban/unban players even when the server is powered down.
-- **🚀 1-Click Server Startup**: Direct power launch button inside Player Manager when the server is offline.
-
-### 2. 🧩 Addon Marketplace (Consolidated A to Z Suite)
-- **🌐 3 Universal Web Providers**:
-  1. **Modrinth** (`https://modrinth.com`): Modern mods, plugins, datapacks, resource packs, and modpacks.
-  2. **CurseForge** (`https://www.curseforge.com`): Full ecosystem integration via `CURSEFORGE_API_KEY` covering plugins, mods, worlds/maps, and modpacks.
-  3. **SpigotMC** (`https://www.spigotmc.org`): Access to 90,000+ Bukkit, Spigot, and Paper plugins with version compatibility lists and 1-click `.jar` installation.
-- **🎮 Minecraft Version Filtering (A to Z)**:
-  - Comprehensive dropdown selector covering every release from **Minecraft 1.21 Tricky Trials** down to **1.5.2**, plus interactive quick version selector pills.
-- **📂 Consolidated Categories**:
-  - **Version Changer**: 1-click server core and engine switcher (Paper, Purpur, Spigot, Fabric, Forge, NeoForge, Velocity, BungeeCord).
-  - **Player Manager**: Complete live and offline player moderation suite with inventory inspections.
-  - **World Manager**: World creation, dimension management, CurseForge/Modrinth world store, instant generator profiles (Void, Superflat, Amplified, Large Biomes), and ZIP archive import/export.
-  - **Plugins / Mods / Datapacks / Resource Packs / Modpacks**: 1-click deployment to appropriate folders.
-  - **Properties UI**: Visual `server.properties` editor with dedicated **`[ 🟢 ON ]` `[ ⚪ OFF ]`** segmented switchers, live color-coded MOTD preview (`§` and `&` codes), and a **"Restart to Apply"** quick reboot button.
-  - **Server Tools**: 1-click essential utility suite (ViaVersion, GeyserMC, Floodgate, Spark Profiler, Chunky, LuckPerms), Aikar's JVM performance flags, and Playit.gg tunnel manager.
-
-### 3. 🔄 Minecraft Version Changer (MCJars Engine)
-- Switch server software and Minecraft versions with a single click.
-- Supported server cores:
-  - **Paper**, **Purpur**, **Spigot**, **Vanilla**, **Fabric**, **Forge**, **NeoForge**, **BungeeCord**, **Velocity**, and **Bedrock Dedicated Server**.
-- Automatic server jar backup, download verification, and configuration adjustments.
-
-### 4. 🎨 Theme & Customization Engine
-- **🖤 Full Black OLED**: Pure pitch black background (`#000000`), deep black frosted glass cards, and high-contrast neon accents.
-- **🌌 PteroX V2**: High-tech deep space dark mode (`#111525`), primary cyan (`#23aeea`), and accent orange (`#ff5108`).
-- **🌟 LiquidX**: Polished glassmorphism with custom gold and emerald accents.
-- **💎 Arix**: Modern streamlined layout with deep blue palette.
-- **🖼️ Integrated 4K Wallpapers Browser ([4kwallpapers.com](https://4kwallpapers.com/))**:
-  - 36 categories, search, pagination, and 1-click apply across the panel.
-- **📹 Custom Media Backgrounds**:
-  - Upload custom high-res images (`JPG, PNG, WEBP, GIF`) or looping background videos (`MP4, WEBM` up to 100MB).
-- **🎚️ Real-Time Sliders**: Dynamic opacity (0% to 100%) and blur (0px to 40px) sliders with debounced auto-save.
-
-### 5. 🌐 Playit.gg Zero-Port Tunnel Integration
-- **Addon Marketplace 1-Click Install**: Installs the latest official `playit-minecraft-plugin.jar` automatically into `plugins/` or `mods/`.
-- **Live Status & Address Detection**: Scans logs to detect claim URLs and public player connection domains (`*.gl.joinmc.link`).
-- **Native Linux System Daemon (playit CLI)**:
-  - Accessible via `./menu.sh playit` or interactive `menu.sh` Option 8.
 
 ---
 

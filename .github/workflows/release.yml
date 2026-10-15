@@ -1,0 +1,69 @@
+name: Release & Version Tag
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Publish Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
+      - name: Determine Version
+        id: get_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=v$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: v$VERSION"
+
+      - name: Create or Update Tag
+        id: tag_version
+        run: |
+          TAG_NAME="${{ steps.get_version.outputs.VERSION }}"
+          if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+            echo "Tag $TAG_NAME already exists, generating build release..."
+            TAG_NAME="${TAG_NAME}-build.${{ github.run_number }}"
+          fi
+          echo "TAG=$TAG_NAME" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag_version.outputs.TAG }}
+          name: "TG-PANEL ${{ steps.tag_version.outputs.TAG }}"
+          body: |
+            ## 🎮 TG-PANEL Release ${{ steps.tag_version.outputs.TAG }}
+
+            ### ✨ What's New
+            - Upgraded Modern Glassmorphism UI across Modals, Prompts, and Toasts.
+            - Enhanced Addon Pack v2.0.2 integration (Marketplace & Admin Addons).
+            - MariaDB & MySQL 8.4 Multi-Database Engine support (Ports 3002 & 3005).
+            - Optimized PM2 cluster management, SFTP, and API daemon architecture.
+
+            **Full Changelog**: https://github.com/${{ github.repository }}/commits/${{ steps.tag_version.outputs.TAG }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

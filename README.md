@@ -1,299 +1,249 @@
-<!-- ============================================================================== -->
-<!--                     🎮 MPANEL v2.5.2 - NEXT-GEN GAME & APP PANEL               -->
-<!-- ============================================================================== -->
-
 <p align="center">
-  <a href="https://primepanel.in">
-    <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,6,11,16,21&height=220&section=header&text=🎮%20MPANEL%20v2.5.2&fontSize=42&fontAlignY=36&desc=High-Performance%20Game%20%26%20App%20Server%20Web%20Management%20Engine%20for%20Node.js&descAlignY=58&descSize=18&animation=twinkling" width="100%" alt="Prime Panel Header Banner" />
-  </a>
+  <img src="public/assets/banner.png" width="100%" alt="TG-PANEL Banner" />
 </p>
 
 <p align="center">
-  <a href="https://primepanel.in">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&pause=1000&color=22D3EE&center=true&vCenter=true&random=false&width=750&lines=⚡+Modern+Node.js+Alternative+to+Pterodactyl;🚀+Real-Time+xterm.js+Console+%26+Live+Meters;🔄+Automated+GitHub+Releases+Detector+%26+Live+Update+Terminal;🎮+Minecraft+Player+Manager+%26+Universal+Addon+Marketplace;🔒+Embedded+SFTP+(Port+3004)+%26+MariaDB+(Port+27017);🎨+Multi-Theme+Personalization%3A+Full+Black+OLED%2C+PteroX+V2%2C+LiquidX" alt="Typing Animation" />
-  </a>
+  <img src="public/assets/logo.png" width="120" alt="TG-PANEL Logo" />
+</p>
+
+<h1 align="center">TG-PANEL</h1>
+
+<p align="center">
+  <b>A fast, self-hosted web panel for managing game & application servers.</b><br/>
+  Live console · Built-in SFTP · REST & WebSocket API
 </p>
 
 <p align="center">
-  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/Node.js-18.0%2B-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" /></a>
-  <a href="https://github.com/ShadowGamerIND37/Prime Panel/releases/tag/v2.5.2"><img src="https://img.shields.io/badge/Release-v2.5.2-8A2BE2?style=for-the-badge&logo=github&logoColor=white" alt="Version" /></a>
-  <a href="https://primepanel.in"><img src="https://img.shields.io/badge/Website-primepanel.in-007ACC?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Website" /></a>
-  <a href="#-system-updates--live-terminal-engine"><img src="https://img.shields.io/badge/Auto--Updater-Live%20Terminal-00C7B7?style=for-the-badge&logo=terminal&logoColor=white" alt="Auto Updater" /></a>
-  <a href="#-theme--customization-engine"><img src="https://img.shields.io/badge/Theme-Full%20Black%20OLED-111525?style=for-the-badge&logo=styled-components&logoColor=white" alt="Theme" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-F7DF1E?style=for-the-badge&logo=open-source-initiative&logoColor=black" alt="License" /></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/Node.js-18%2B-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js 18+" /></a>
+  <a href="https://github.com/ShadowGamerIND37/TGPANEL/releases"><img src="https://img.shields.io/badge/Release-v2.5.4-8A2BE2?style=flat-square&logo=github&logoColor=white" alt="Release v2.5.4" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-F7DF1E?style=flat-square" alt="MIT License" /></a>
+  <a href="https://tgpanel.in"><img src="https://img.shields.io/badge/Website-tgpanel.in-007ACC?style=flat-square" alt="Website" /></a>
 </p>
 
 <p align="center">
-  <a href="#-quick-start"><b>🚀 Quick Start</b></a> •
-  <a href="#-what-is-new-in-v252"><b>✨ What's New</b></a> •
-  <a href="#-core-features--capabilities"><b>🧩 Features</b></a> •
-  <a href="#-theme--customization-engine"><b>🎨 Themes</b></a> •
-  <a href="#-architecture--port-matrix"><b>🔒 Ports</b></a> •
-  <a href="#-directory-structure"><b>📁 Structure</b></a> •
-  <a href="https://primepanel.in"><b>🌐 Cloud Hosting</b></a>
+  <a href="#-features">Features</a> ·
+  <a href="#-quick-start">Quick Start</a> ·
+  <a href="#-architecture">Architecture</a> ·
+  <a href="#-sftp-access">SFTP</a> ·
+  <a href="#-security-checklist">Security</a> ·
+  <a href="#-troubleshooting">Troubleshooting</a> ·
+  <a href="#-contributing">Contributing</a>
 </p>
 
 ---
 
-## 📸 3D Live Showcase
-
+<!-- TODO: add a real screenshot or GIF of the dashboard -->
+<!--
 <p align="center">
-  <img src="public/assets/console-preview.png" alt="Prime Panel Server Console & Live Telemetry Dashboard" style="border-radius: 16px; box-shadow: 0 0 45px rgba(34, 211, 238, 0.3), 0 20px 40px rgba(0, 0, 0, 0.85); border: 2px solid rgba(34, 211, 238, 0.25);" width="100%" />
+  <img src="public/assets/screenshot-dashboard.png" width="90%" alt="Dashboard screenshot" />
 </p>
+-->
 
----
+## ✨ Features
 
-## ⚡ High-Speed Architecture & Workflow
+| | |
+| :--- | :--- |
+| 🖥️ **Live console** | Real-time server output and commands over WebSocket |
+| 📁 **Built-in SFTP** | Per-server file access with your panel credentials, no extra setup |
+| 🔌 **Daemon API** | REST and WebSocket API for automation and integrations |
+| 🗄️ **Separate databases** | MariaDB for the panel, MySQL 8.4 for game servers |
+| 🧰 **Management menu** | One script to install, update, and maintain the panel |
 
-```mermaid
-graph TD
-    Client["🌐 Client Browser (Admins & Users)"] -->|Port 3001: Web UI & xterm.js WebSocket| Gateway["🚀 Prime Panel Engine (Port 3001)"]
-    External["⚡ External Integrations / Discord Bots"] -->|Port 3003: REST & WS API| GatewayAPI["🔌 Daemon API (Port 3003)"]
-    FTPClient["📁 FileZilla / WinSCP / Cyberduck"] -->|Port 3004: SSH SFTP| SFTP["🛡️ Embedded SFTP Server (Port 3004)"]
-
-    Gateway --> EngineCore{"⚙️ Core Controller"}
-    GatewayAPI --> EngineCore
-
-    EngineCore -->|Container Lifecycle| Docker["🐳 Docker Engine (Java 8-25, Node, Python)"]
-    EngineCore -->|Database Storage| MariaDB["🗄️ MariaDB / MySQL 11 (Port 27017)"]
-    EngineCore -->|Live Output Stream| WSConsole["📟 WebSocket Console Engine"]
-    EngineCore -->|Release Pipeline| AutoUpdater["🔄 GitHub Releases Auto-Detect & Live Terminal"]
-
-    style Gateway fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,color:#fff
-    style GatewayAPI fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#fff
-    style SFTP fill:#064e3b,stroke:#34d399,stroke-width:2px,color:#fff
-    style MariaDB fill:#701a75,stroke:#f472b6,stroke-width:2px,color:#fff
-    style AutoUpdater fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#fff
-```
-
----
-
-## 🔒 Architecture & Port Matrix
-
-| Service | Port | Protocol | Encryption | Description |
-| :--- | :---: | :---: | :---: | :--- |
-| **Web Panel UI** | `3001` | HTTP / WS | TLS / SSL | Main Web Dashboard & Live Console WebSocket |
-| **Panel & Daemon API** | `3003` | HTTP / WS | Bearer JWT | REST & WS API for external bots, billing & WHMCS |
-| **Embedded SFTP Server** | `3004` | SFTP | SSH2 RSA/ECDSA | Built-in high-speed file transfer (`sftp://host:3004`) |
-| **Dedicated MariaDB Engine**| `27017`| TCP | Native Auth | Relational database server for Minecraft plugins & app databases |
-
----
-
-## ✨ What is New in v2.5.2
-
-<p align="center">
-  <img src="public/assets/console-preview.png" alt="Prime Panel v2.5.2 Console & Live Parsentbar Telemetry Preview" style="border-radius: 14px; border: 1px solid rgba(34, 211, 238, 0.25); box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8);" width="100%" />
-</p>
-
-### 1. 🟢 Real-Time 5-State Server Lifecycle Engine
-- **5 High-Accuracy Real-Time Statuses**:
-  - 🟢 **Online / Started**: Server process running, ports active, telemetry streaming.
-  - 🔴 **Offline / Stopped**: Process terminated, zero resource consumption.
-  - 🟡 **Restarting**: Graceful reload sequence in progress.
-  - 🔵 **Starting**: Process booting, initializing JVM/Node/Python runtime.
-  - ⚫ **Stopping**: Graceful shutdown and file lock flushing in progress.
-- **Optimistic Power Control & Status Synchronization**: Immediate UI badge update and button state locking upon clicking **Start**, **Stop**, **Restart**, or **Kill** to eliminate latency perception and prevent duplicated socket requests.
-- **Dual-Source Status Resolution**: Combines real-time Docker container inspection with active process metrics for 100% accurate status reporting.
-
-### 2. 📊 Glowing Telemetry Cards & Horizontal Parsentbars
-- **Horizontal Smooth Percent Progress Bars (`.parsentbar`)**: High-contrast visual capacity bars showing real-time utilization beneath every metric.
-- **Individual Glow Accents**:
-  - ⚡ **CPU**: Cyan accent (`#06b6d4`) with percentage load indicator.
-  - 🧠 **Memory**: Purple accent (`#a855f7`) with live dual readout (e.g., `512 MB / 2048 MB`).
-  - 💾 **Disk**: Amber accent (`#f59e0b`) with capacity tracking.
-  - 📥 **Inbound Network**: Emerald accent (`#10b981`) showing real-time download bandwidth.
-  - 📤 **Outbound Network**: Rose accent (`#f43f5e`) showing real-time upload bandwidth.
-- **Dual Metric Readout**: Displays both percentage progress bar and raw human-readable numbers (MB, GB, KB/s) side-by-side.
-
-### 3. 🧭 Optimized Address & State-Reactive Uptime Grid
-- **Adaptive `1.65fr : 1fr` Responsive Split**: Balanced layout prevents IP address, port, and subdomain truncation on standard and wide monitors.
-- **1-Click Address Copy**: Integrated `data-addr` click-to-copy with instant visual copied checkmark feedback.
-- **Reactive Uptime Pill**: Vibrantly pulses emerald when the server is online; seamlessly transitions to a muted slate pill when offline or stopped.
-
-### 4. 🛡️ Admin-Only Server Deletion Security Hardening
-- **Strict Backend Route Protection**: `DELETE /api/servers/:id` strictly validates `req.user.role === 'admin'`, returning `403 Forbidden` if a standard user attempts deletion.
-- **Zero Accidental Deletions**: Standard users cannot delete instances.
-- **Console Settings Tab Lockout**: The red "Delete Server" button in the Console Danger Zone is automatically hidden for regular users and replaced with an **"Admin Only"** locked badge.
-
-### 5. 💻 Modernized `menu.sh` Management Interface
-- **Official ASCII Banner**: Striking cyberpunk ASCII art header upon launching `./menu.sh`:
-  ```
-      ██████╗ ██████╗ ██╗███╗   ███╗███████╗   
-      ██╔══██╗██╔══██╗██║████╗ ████║██╔════╝   
-      ██████╔╝██████╔╝██║██╔████╔██║█████╗║    
-      ██╔═══╝ ██╔══██╗██║██║╚██╔╝██║██╔══╝     
-      ██║     ██║  ██║██║██║ ╚═╝ ██║███████╗   
-      ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝   
-  ```
-- **Live System Telemetry Dashboard**: Real-time display of Public IP, Local Network IP, Active Port Matrix (`3001`, `3003`, `3004`, `27017`), and PM2 Daemon status (`ONLINE` / `STOPPED`).
-- **Structured Modular Menus**: Main Menu, PM2 Process Suite, and Database Management menus with intuitive numeric selection.
-
-### 6. 🌐 Standalone Server Instance Deployment Portal (`deploy.php`)
-- **Dedicated Deployment Portal**: Modern web interface (`deploy.php` & `public/deploy.php`) for selecting server configurations, runtime types, hardware specs, and billing cycles with instant provisioning.
-
-### 7. 🖥️ VM - KVM / No-KVM Virtualization Architecture
-- Clean branding upgrade replacing legacy LumenVM with transparent **VM - KVM** (hardware-assisted kernel virtualization) and **No-KVM** (lightweight isolated containerization) presets across the server wizard and management console.
-
----
-
-## 📦 Supported Runtimes & Environments
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Java-8%20|%2011%20|%2016%20|%2017%20|%2021%20|%2025-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java" />
-  <img src="https://img.shields.io/badge/Node.js-12%20|%2014%20|%2016%20|%2018%20|%2020%20|%2022%20|%2024%20|%2025-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node" />
-  <img src="https://img.shields.io/badge/Python-2.7%20|%203.7%20--%203.13-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-</p>
+<!-- TODO: add or remove rows to match what the panel actually supports -->
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. ⚡ 1-Click Universal Auto Install (`menu.sh`)
-Run the full automated installer directly from the web or locally:
-```bash
-# Instant One-Liner from GitHub
-bash <(curl -sSL https://raw.githubusercontent.com/ShadowGamerIND37/Prime Panel/main/menu.sh)
+### Requirements
 
-# Or locally
-./menu.sh auto -y
-# or interactive
-./menu.sh auto
-```
+- Linux server (Ubuntu 22.04+ / Debian 12+ recommended) <!-- TODO: confirm supported distros -->
+- Node.js 18 or newer
+- Git
+- Root or `sudo` access <!-- TODO: confirm -->
 
-### 2. 🎮 Interactive Management Menu (`menu.sh`)
+### Install
+
 ```bash
-./menu.sh
-# or
+git clone https://github.com/ShadowGamerIND37/TGPANEL
+cd TGPANEL
 bash menu.sh
 ```
 
-| Command Shortcut | Purpose |
-| :--- | :--- |
-| `./menu.sh auto` | 1-Click Auto Install, Setup, Database Seeding & PM2 Launch |
-| `./menu.sh update` | 1-Click Auto Update (Git pull, DB migrations, dependencies & PM2 restart) |
-| `./menu.sh usercreate` | Create new administrator or standard customer user |
-| `./menu.sh pm2` | PM2 Process Management menu (Start, Stop, Restart, Logs, Autostart) |
-| `./menu.sh db` | Database Suite (MariaDB/MySQL Docker engine & Migrations) |
-| `./menu.sh status` | Check port listening status (`3001`, `3003`, `3004`, `27017`) and database |
-| `./menu.sh playit` | Install native Playit.gg zero-port tunnel CLI |
-| `./menu.sh uninstall`| Safely remove or clean Prime Panel deployment |
+Follow the prompts in the menu. When it finishes, open the panel at:
 
-### 3. 🛠️ Manual CLI Setup
+```
+http://<your-server-ip>:3001
+```
+
+### Reopen the management menu
+
 ```bash
-# 1. Clone the repository
-git clone https://github.com/ShadowGamerIND37/PrimePanel.git
-cd Prime Panel
-
-# 2. Install dependencies
-npm install
-
-# 3. Run automated directory, .env & database setup
-npm run setup
-
-# 4. Launch with PM2 in Cluster Mode
-npm run pm2:start
-npm run pm2:logs
+cd TGPANEL
+./menu.sh
 ```
 
 ---
 
-## 📁 Directory Structure
+## 🔑 First Login
 
-```
-/
-├── bin/
-│   ├── setup.js             # Automated setup, directory creator & database seeder
-│   ├── createuser.js        # Interactive CLI user creation script
-│   ├── migrate.js           # Database migration runner
-│   └── build.js             # Directory verification & preparation script
-├── mpanel/
-│   ├── servers/             # Sandboxed server directories (server1, server2, ...)
-│   └── backups/             # Server snapshot .zip archives
-├── public/
-│   ├── index.html           # Main SPA HTML structure
-│   ├── deploy.php           # Public server deployment portal
-│   ├── css/
-│   │   └── style.css        # Multi-theme palettes & glassmorphic styling
-│   └── js/
-│       ├── app.js           # Core router, auth UI & toast notifications
-│       ├── updates.js       # Auto-detect updates engine & live xterm.js terminal
-│       ├── autoTutorial.js  # Spotlight guided walkthrough engine
-│       ├── knowledge.js     # Tutorials Hub & live configuration generators
-│       ├── admin.js         # Global System Overview, servers, users, telemetry
-│       ├── settings.js      # Themes, 4K wallpapers, feature toggles
-│       ├── marketplace.js   # CurseForge, Modrinth & SpigotMC marketplace
-│       ├── playerManager.js # Minecraft Live Player Manager & Inventory Viewer
-│       ├── worldManager.js  # Minecraft World Installer & Dimension Manager
-│       ├── versionChanger.js# MCJars Version & Core switcher
-│       ├── console.js       # Real-time xterm.js terminal & server controls
-│       └── filemanager.js   # Sandboxed file manager & code editor
-├── src/
-│   ├── index.js             # Main server launcher (Ports 3001, 3003, 3004)
-│   ├── config/              # App configurations & image presets
-│   ├── database/
-│   │   ├── db.js            # MariaDB / MySQL connection pool & queries
-│   │   └── seed.js          # Database seeders
-│   ├── middleware/          # JWT auth, admin permissions & file uploads
-│   ├── routes/
-│   │   ├── adminUpdateRoutes.js  # System updates API & git tracking
-│   │   ├── adminRoutes.js        # Global telemetry & cluster administration
-│   │   ├── adminSettingsRoutes.js# Settings & feature toggles
-│   │   └── serverRoutes.js       # Server lifecycle & management
-│   ├── services/
-│   │   ├── updateService.js      # GitHub Releases auto-detect & pipeline runner
-│   │   ├── runnerService.js      # Server process execution
-│   │   └── wallpaperService.js   # 4KWallpapers scraper & category cache
-│   ├── sftp/
-│   │   └── sftpServer.js    # Embedded SSH2 SFTP Server on port 3004
-│   └── websocket/
-│       └── consoleWs.js     # Real-time WebSocket terminal & update streams
-├── deploy.php               # Standalone server instance deployment portal
-├── menu.sh                  # Interactive CLI management script & ASCII dashboard
-└── ecosystem.config.js      # PM2 clustering configuration
+| Field | Value |
+| :--- | :--- |
+| **URL** | `http://localhost:3001` |
+| **Username** | `admin` |
+| **Password** | `admin` |
+
+> [!WARNING]
+> These are default credentials. **Change the password immediately after your first login.**
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart LR
+    User([Browser]) -->|3001| Panel[Panel Web UI]
+    Panel --> PanelDB[(Panel DB<br/>MariaDB :3002)]
+    Panel -->|REST / WebSocket| Daemon[Daemon API :3003]
+    Daemon --> Servers[Game & App Servers]
+    Servers --> ServerDB[(Server DB<br/>MySQL 8.4 :3005)]
+    SFTPClient([SFTP Client]) -->|3004| SFTP[SFTP Server]
+    SFTP --> Servers
 ```
 
----
+<!-- TODO: verify the connections above match how the components actually talk to each other -->
 
-## 🔒 SFTP Connection Details
+### Ports
 
-Connect using any SFTP client (FileZilla, WinSCP, Cyberduck):
-- **Host**: `localhost` (or server IP)
-- **Port**: `3004`
-- **Username**: `<username>.<server_id>` (e.g. `admin.1` for Server #1)
-- **Password**: Your Prime Panel account password
-
----
-
-## 🛡️ Default Credentials
-- **Username**: `admin`
-- **Password**: `admin`
-- **Login URL**: `http://localhost:3001`
+| Service | Port | Description | Expose publicly? |
+| :--- | :---: | :--- | :---: |
+| **Panel Web UI** | `3001` | Dashboard and live console | ✅ Yes (behind HTTPS) |
+| **Panel DB (MariaDB)** | `3002` | Panel internal database | ❌ No |
+| **Daemon API** | `3003` | REST and WebSocket API | ⚠️ Only if needed |
+| **SFTP Server** | `3004` | Built-in SFTP | ✅ If you use SFTP |
+| **Server DB (MySQL 8.4)** | `3005` | Game servers database | ❌ No |
 
 ---
 
-## 👨‍💻 Creator & Developer
+## 📁 SFTP Access
 
-<p align="center">
-  <a href="https://discord.com/users/1339797978214567977" target="_blank">
-    <img src="public/images/shadow-discord.png" alt="ShadowGamerIND37 Discord Profile" width="280px" style="border-radius: 16px; box-shadow: 0 0 30px rgba(88, 101, 242, 0.4);" />
-  </a>
-</p>
+| Field | Value |
+| :--- | :--- |
+| **Host** | `localhost` or your server IP |
+| **Port** | `3004` |
+| **Username** | `admin.<server_id>` (for example `admin.1`) |
+| **Password** | Your TG-PANEL account password |
 
-<p align="center">
-  <b>Developed &amp; Engineered by ShadowGamerIND (<code>realshadowgamerind</code>)</b><br/>
-  💬 Discord: <a href="https://discord.com/users/1339797978214567977" target="_blank"><code>realshadowgamerind</code> (ID: <code>924366651443527710</code>)</a> • Mention: <code>&lt;@924366651443527710&gt;</code><br/>
-  ⚡ Live Presence: <b>Real-time Discord Gateway &amp; Lanyard Live Sync</b><br/>
-  🌐 Official Website: <a href="https://primepanel.in/" target="_blank"><b>https://primepanel.in/</b></a>
-</p>
+```bash
+sftp -P 3004 admin.1@your-server-ip
+```
+
+Or connect with a client like FileZilla or WinSCP using `sftp://your-server-ip:3004`.
 
 ---
 
-<p align="center">
-  <a href="https://primepanel.in">
-    <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=21,16,11,6,2&height=120&section=footer" width="100%" alt="Footer Wave" />
-  </a>
-</p>
+## 🛡️ Security Checklist
+
+- [ ] Change the default `admin` / `admin` login
+- [ ] Block database ports `3002` and `3005` from the public internet
+- [ ] Serve the panel over HTTPS using a reverse proxy (Nginx or Caddy)
+- [ ] Keep the panel updated to the latest release
+
+<details>
+<summary><b>Example firewall setup (UFW)</b></summary>
+
+```bash
+sudo ufw default deny incoming
+sudo ufw allow 22/tcp      # SSH
+sudo ufw allow 3001/tcp    # Panel (or 80/443 if using a reverse proxy)
+sudo ufw allow 3004/tcp    # SFTP
+sudo ufw enable
+```
+
+Database ports `3002` and `3005` stay closed, so only local services can reach them.
+
+</details>
+
+<details>
+<summary><b>Example Nginx reverse proxy</b></summary>
+
+```nginx
+server {
+    listen 80;
+    server_name panel.example.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+The `Upgrade` headers are required for the live console (WebSocket) to work. Add HTTPS with [Certbot](https://certbot.eff.org/).
+
+</details>
+
+---
+
+## 🩺 Troubleshooting
+
+<details>
+<summary><b>Can't reach the panel on port 3001</b></summary>
+
+- Check that the panel is running from the management menu.
+- Make sure your firewall or cloud provider's security group allows port `3001`.
+- If you're on a remote server, use the server IP instead of `localhost`.
+
+</details>
+
+<details>
+<summary><b>Live console doesn't update behind a reverse proxy</b></summary>
+
+Your proxy must forward WebSocket connections. See the Nginx example above.
+
+</details>
+
+<details>
+<summary><b>SFTP login fails</b></summary>
+
+- Use the format `admin.<server_id>`, not just `admin`.
+- The password is your panel account password.
+- Confirm port `3004` is open and you're connecting with `-P 3004` (capital P for `sftp`).
+
+</details>
+
+<details>
+<summary><b>Node.js version errors</b></summary>
+
+Run `node -v`. If it's below 18, upgrade Node.js and run the menu again.
+
+</details>
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome.
+
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/my-change`
+3. Commit your changes: `git commit -m "Add my change"`
+4. Push and open a pull request
+
+Found a bug or have an idea? [Open an issue](https://github.com/ShadowGamerIND37/TGPANEL/issues).
+
+---
+
+## 👨‍💻 Credits
+
+- **Developer:** [ShadowGamerIND](https://discord.com/users/924366651443527710)
+- **Website:** [tgpanel.in](https://tgpanel.in)
+- **License:** [MIT](LICENSE)
 
 <p align="center">
-  <b>Prime Panel</b> &copy; 2026 • Designed &amp; Engineered with ❤️ by <a href="https://primepanel.in"><b>ShadowGamerIND</b> (primepanel.in)</a> • Licensed under the <a href="LICENSE">MIT License</a>
+  <sub>Made with ❤️ for the game hosting community</sub>
 </p>

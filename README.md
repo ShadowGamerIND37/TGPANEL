@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="https://nodejs.org"><img src="https://img.shields.io/badge/Node.js-18%2B-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js 18+" /></a>
-  <a href="https://github.com/ShadowGamerIND37/TGPANEL/releases"><img src="https://img.shields.io/badge/Release-v2.5.4-8A2BE2?style=flat-square&logo=github&logoColor=white" alt="Release v2.5.4" /></a>
+  <a href="https://github.com/ShadowGamerIND37/TGPANEL/releases"><img src="https://img.shields.io/badge/Release-v1.0.0-8A2BE2?style=flat-square&logo=github&logoColor=white" alt="Release v1.0.0" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-F7DF1E?style=flat-square" alt="MIT License" /></a>
   <a href="https://tgpanel.in"><img src="https://img.shields.io/badge/Website-tgpanel.in-007ACC?style=flat-square" alt="Website" /></a>
 </p>

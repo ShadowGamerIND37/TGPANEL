@@ -11,11 +11,11 @@
 session_start();
 
 // --- Configuration & Default Settings ---
-$defaultTG-PANELUrl = getenv('MPANEL_URL') ?: 'http://localhost:3003';
+$defaultTgPanelUrl = getenv('MPANEL_URL') ?: 'http://localhost:3003';
 $defaultApiKey = getenv('MPANEL_API_KEY') ?: '';
 
 if (!isset($_SESSION['mpanel_url'])) {
-    $_SESSION['mpanel_url'] = $defaultTG-PANELUrl;
+    $_SESSION['mpanel_url'] = $defaultTgPanelUrl;
 }
 if (!isset($_SESSION['mpanel_token']) && $defaultApiKey) {
     $_SESSION['mpanel_token'] = $defaultApiKey;
@@ -27,7 +27,7 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 // Helper: Make cURL Request to TG-PANEL API
-function callTG-PANELApi($endpoint, $method = 'GET', $data = null, $token = null, $baseUrl = null) {
+function callTgPanelApi($endpoint, $method = 'GET', $data = null, $token = null, $baseUrl = null) {
     if (!$baseUrl) {
         $baseUrl = $_SESSION['mpanel_url'] ?? 'http://localhost:3003';
     }
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         if ($token) $_SESSION['mpanel_token'] = $token;
         
         // Test connection
-        $test = callTG-PANELApi('/api/admin/settings/public', 'GET', null, null, $_SESSION['mpanel_url']);
+        $test = callTgPanelApi('/api/admin/settings/public', 'GET', null, null, $_SESSION['mpanel_url']);
         if (isset($test['success']) && $test['success']) {
             $notice = 'Successfully connected to TG-PANEL: ' . htmlspecialchars($test['settings']['panel_name'] ?? 'TG-PANEL');
         } else {
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $url = trim($_POST['mpanel_url'] ?? $_SESSION['mpanel_url']);
         if ($url) $_SESSION['mpanel_url'] = rtrim($url, '/');
         
-        $loginRes = callTG-PANELApi('/api/auth/login', 'POST', [
+        $loginRes = callTgPanelApi('/api/auth/login', 'POST', [
             'username' => $username,
             'password' => $password
         ], null, $_SESSION['mpanel_url']);
@@ -181,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 'mc_jar_version' => $mcJarVersion ?: null
             ];
             
-            $res = callTG-PANELApi('/api/servers', 'POST', $payload, $authToken);
+            $res = callTgPanelApi('/api/servers', 'POST', $payload, $authToken);
             if (!empty($res['success'])) {
                 $createdServer = [
                     'id' => $res['serverId'] ?? null,
@@ -210,25 +210,25 @@ $publicSettings = [];
 
 if ($authToken) {
     // 1. Fetch public settings
-    $settingsRes = callTG-PANELApi('/api/admin/settings/public');
+    $settingsRes = callTgPanelApi('/api/admin/settings/public');
     if (!empty($settingsRes['settings'])) {
         $publicSettings = $settingsRes['settings'];
     }
     
     // 2. Fetch users list
-    $uRes = callTG-PANELApi('/api/admin/users', 'GET', null, $authToken);
+    $uRes = callTgPanelApi('/api/admin/users', 'GET', null, $authToken);
     if (!empty($uRes['users'])) {
         $usersList = $uRes['users'];
     }
     
     // 3. Fetch nodes & allocations
-    $nRes = callTG-PANELApi('/api/admin/nodes', 'GET', null, $authToken);
+    $nRes = callTgPanelApi('/api/admin/nodes', 'GET', null, $authToken);
     if (!empty($nRes['nodes'])) {
         $nodesList = $nRes['nodes'];
     }
     
     // 4. Fetch network allocations
-    $netRes = callTG-PANELApi('/api/admin/network', 'GET', null, $authToken);
+    $netRes = callTgPanelApi('/api/admin/network', 'GET', null, $authToken);
     if (!empty($netRes['allocations'])) {
         $freeAllocations = array_filter($netRes['allocations'], function($a) {
             return empty($a['assigned']) || $a['assigned'] == 0;

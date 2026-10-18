@@ -277,6 +277,84 @@ class SettingsManager {
                     </button>
                   </div>
                 </div>
+
+                <!-- Option H: Aurora Pulse Theme -->
+                <div id="theme-card-aurora" onclick="settingsManager.selectTheme('aurora')" class="theme-select-card p-5 rounded-2xl border ${this.currentTheme.activeTheme === 'aurora' ? 'active bg-emerald-950/20 border-emerald-500/50 ring-1 ring-emerald-500/30' : 'bg-slate-900/40 border-white/5 hover:border-white/20'} flex flex-col justify-between space-y-4">
+                  <div class="flex items-start justify-between">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-2 flex items-center justify-center shadow-inner">
+                      <i data-lucide="sparkles" class="w-6 h-6 text-emerald-400"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Aurora v1.0</span>
+                  </div>
+                  <div>
+                    <h4 class="text-base font-bold text-white flex items-center gap-1.5">
+                      Aurora Pulse <span class="text-xs text-emerald-400 font-normal">v1.0</span>
+                    </h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Fresh aurora gradients and crystal blue highlights for a vibrant, modern hosting panel.</p>
+                  </div>
+                  <div class="pt-2 flex items-center justify-between border-t border-white/5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-3 h-3 rounded-full bg-[#34d399]"></span>
+                      <span class="w-3 h-3 rounded-full bg-[#22d3ee]"></span>
+                      <span class="w-3 h-3 rounded-full bg-[#071d1a]"></span>
+                    </div>
+                    <button type="button" id="btn-theme-aurora" class="text-xs font-semibold px-3 py-1.5 rounded-lg ${this.currentTheme.activeTheme === 'aurora' ? 'btn-cyber' : 'bg-white/5 text-slate-300 hover:bg-white/10'}">
+                      ${this.currentTheme.activeTheme === 'aurora' ? '✓ Active Theme' : 'Activate Aurora'}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Option I: Solaris Glow Theme -->
+                <div id="theme-card-solaris" onclick="settingsManager.selectTheme('solaris')" class="theme-select-card p-5 rounded-2xl border ${this.currentTheme.activeTheme === 'solaris' ? 'active bg-amber-950/20 border-amber-500/50 ring-1 ring-amber-500/30' : 'bg-slate-900/40 border-white/5 hover:border-white/20'} flex flex-col justify-between space-y-4">
+                  <div class="flex items-start justify-between">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 p-2 flex items-center justify-center shadow-inner">
+                      <i data-lucide="sun" class="w-6 h-6 text-amber-300"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">Solaris v1.0</span>
+                  </div>
+                  <div>
+                    <h4 class="text-base font-bold text-white flex items-center gap-1.5">
+                      Solaris Glow <span class="text-xs text-amber-400 font-normal">v1.0</span>
+                    </h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Golden sunrise energy with brighter accent surfaces, warm dashboards, and polished glass cards.</p>
+                  </div>
+                  <div class="pt-2 flex items-center justify-between border-t border-white/5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-3 h-3 rounded-full bg-[#fbbf24]"></span>
+                      <span class="w-3 h-3 rounded-full bg-[#f59e0b]"></span>
+                      <span class="w-3 h-3 rounded-full bg-[#1f1609]"></span>
+                    </div>
+                    <button type="button" id="btn-theme-solaris" class="text-xs font-semibold px-3 py-1.5 rounded-lg ${this.currentTheme.activeTheme === 'solaris' ? 'btn-cyber' : 'bg-white/5 text-slate-300 hover:bg-white/10'}">
+                      ${this.currentTheme.activeTheme === 'solaris' ? '✓ Active Theme' : 'Activate Solaris'}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Option J: Crimson Nova Theme -->
+                <div id="theme-card-crimson" onclick="settingsManager.selectTheme('crimson')" class="theme-select-card p-5 rounded-2xl border ${this.currentTheme.activeTheme === 'crimson' ? 'active bg-rose-950/20 border-rose-500/50 ring-1 ring-rose-500/30' : 'bg-slate-900/40 border-white/5 hover:border-white/20'} flex flex-col justify-between space-y-4">
+                  <div class="flex items-start justify-between">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 p-2 flex items-center justify-center shadow-inner">
+                      <i data-lucide="flame" class="w-6 h-6 text-rose-300"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20">Crimson v1.0</span>
+                  </div>
+                  <div>
+                    <h4 class="text-base font-bold text-white flex items-center gap-1.5">
+                      Crimson Nova <span class="text-xs text-rose-400 font-normal">v1.0</span>
+                    </h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Bold red-hot overlays and sharp contrast for a dramatic, high-impact FC-style command panel.</p>
+                  </div>
+                  <div class="pt-2 flex items-center justify-between border-t border-white/5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-3 h-3 rounded-full bg-[#fb7185]"></span>
+                      <span class="w-3 h-3 rounded-full bg-[#f43f5e]"></span>
+                      <span class="w-3 h-3 rounded-full bg-[#1b0a12]"></span>
+                    </div>
+                    <button type="button" id="btn-theme-crimson" class="text-xs font-semibold px-3 py-1.5 rounded-lg ${this.currentTheme.activeTheme === 'crimson' ? 'btn-cyber' : 'bg-white/5 text-slate-300 hover:bg-white/10'}">
+                      ${this.currentTheme.activeTheme === 'crimson' ? '✓ Active Theme' : 'Activate Crimson'}
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <!-- Arix Theme Enhancements (Audio FX & Colors) -->
@@ -528,7 +606,7 @@ class SettingsManager {
                       <option value="polka" ${window.nebulaEditor?.config?.magicPattern === 'polka' ? 'selected' : ''}>Cosmic Polka Matrix</option>
                       <option value="moon" ${window.nebulaEditor?.config?.magicPattern === 'moon' ? 'selected' : ''}>Lunar Gradient Spheres</option>
                       <option value="wavy-checkerboard" ${window.nebulaEditor?.config?.magicPattern === 'wavy-checkerboard' ? 'selected' : ''}>Wavy Checkerboard</option>
-                      <option value="l-shape" ${window.nebulaEditor?.config?.magicPattern === 'l-shape' ? 'selected' : ''}>L-Shape Grid</option>
+                      <option value="l-shape" ${window.nebulaEditor?.config?.magicPattern === 'l-shape' ? 'selected' : ''}>
                     </select>
                   </div>
                 </div>
@@ -1653,6 +1731,15 @@ class SettingsManager {
     } else if (themeName === 'arix') {
       app.playSound('online');
       app.toast('Arix Theme v2.1.3 activated!', 'success');
+    } else if (themeName === 'aurora') {
+      app.playSound('online');
+      app.toast('Aurora Pulse Theme activated!', 'success');
+    } else if (themeName === 'solaris') {
+      app.playSound('online');
+      app.toast('Solaris Glow Theme activated!', 'success');
+    } else if (themeName === 'crimson') {
+      app.playSound('online');
+      app.toast('Crimson Nova Theme activated!', 'success');
     } else {
       app.toast('NookTheme activated!', 'success');
     }
@@ -1718,6 +1805,9 @@ class SettingsManager {
     const cardNebula = document.getElementById('theme-card-nebula');
     const cardDezerx = document.getElementById('theme-card-dezerx');
     const cardLucent = document.getElementById('theme-card-lucent');
+    const cardAurora = document.getElementById('theme-card-aurora');
+    const cardSolaris = document.getElementById('theme-card-solaris');
+    const cardCrimson = document.getElementById('theme-card-crimson');
     const btnArix = document.getElementById('btn-theme-arix');
     const btnNook = document.getElementById('btn-theme-nook');
     const btnLiquidx = document.getElementById('btn-theme-liquidx');
@@ -1725,6 +1815,9 @@ class SettingsManager {
     const btnNebula = document.getElementById('btn-theme-nebula');
     const btnDezerx = document.getElementById('btn-theme-dezerx');
     const btnLucent = document.getElementById('btn-theme-lucent');
+    const btnAurora = document.getElementById('btn-theme-aurora');
+    const btnSolaris = document.getElementById('btn-theme-solaris');
+    const btnCrimson = document.getElementById('btn-theme-crimson');
     const badge = document.getElementById('active-theme-badge');
     const arixPanel = document.getElementById('arix-options-panel');
     const liquidxPanel = document.getElementById('liquidx-options-panel');
@@ -1739,7 +1832,10 @@ class SettingsManager {
         pterox: 'PteroX Theme v2.0.2 Active',
         nebula: 'Nebula Theme v2.0 Active',
         dezerx: 'DezerX Vulcan Theme Active',
-        lucent: 'LucentUI Theme v2.0 Active'
+        lucent: 'LucentUI Theme v2.0 Active',
+        aurora: 'Aurora Pulse Theme Active',
+        solaris: 'Solaris Glow Theme Active',
+        crimson: 'Crimson Nova Theme Active'
       };
       const badgeClasses = {
         nook: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
@@ -1748,7 +1844,10 @@ class SettingsManager {
         pterox: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
         nebula: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
         dezerx: 'bg-sky-500/20 text-sky-300 border-sky-500/40',
-        lucent: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
+        lucent: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
+        aurora: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+        solaris: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+        crimson: 'bg-rose-500/20 text-rose-300 border-rose-500/40'
       };
       badge.innerText = labels[theme] || `${theme} Active`;
       badge.className = `text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border ${badgeClasses[theme] || badgeClasses.nook}`;
@@ -1769,6 +1868,9 @@ class SettingsManager {
     resetCard(cardNebula, btnNebula, 'Nebula');
     resetCard(cardDezerx, btnDezerx, 'DezerX');
     resetCard(cardLucent, btnLucent, 'LucentUI');
+    resetCard(cardAurora, btnAurora, 'Aurora');
+    resetCard(cardSolaris, btnSolaris, 'Solaris');
+    resetCard(cardCrimson, btnCrimson, 'Crimson');
 
     if (theme === 'lucent') {
       if (cardLucent) cardLucent.className = 'theme-select-card p-5 rounded-2xl border active bg-indigo-950/20 border-indigo-500/50 ring-1 ring-indigo-500/30 flex flex-col justify-between space-y-4';
@@ -1830,6 +1932,36 @@ class SettingsManager {
       if (liquidxPanel) liquidxPanel.classList.add('opacity-60');
       if (pteroxPanel) pteroxPanel.classList.add('opacity-60');
       if (nebulaPanel) nebulaPanel.classList.add('opacity-60');
+    } else if (theme === 'aurora') {
+      if (cardAurora) cardAurora.className = 'theme-select-card p-5 rounded-2xl border active bg-emerald-950/20 border-emerald-500/50 ring-1 ring-emerald-500/30 flex flex-col justify-between space-y-4';
+      if (btnAurora) {
+        btnAurora.innerText = '✓ Active Theme';
+        btnAurora.className = 'text-xs font-semibold px-3 py-1.5 rounded-lg btn-cyber';
+      }
+      if (arixPanel) arixPanel.classList.add('opacity-60');
+      if (liquidxPanel) liquidxPanel.classList.add('opacity-60');
+      if (pteroxPanel) pteroxPanel.classList.add('opacity-60');
+      if (nebulaPanel) nebulaPanel.classList.add('opacity-60');
+    } else if (theme === 'solaris') {
+      if (cardSolaris) cardSolaris.className = 'theme-select-card p-5 rounded-2xl border active bg-amber-950/20 border-amber-500/50 ring-1 ring-amber-500/30 flex flex-col justify-between space-y-4';
+      if (btnSolaris) {
+        btnSolaris.innerText = '✓ Active Theme';
+        btnSolaris.className = 'text-xs font-semibold px-3 py-1.5 rounded-lg btn-cyber';
+      }
+      if (arixPanel) arixPanel.classList.add('opacity-60');
+      if (liquidxPanel) liquidxPanel.classList.add('opacity-60');
+      if (pteroxPanel) pteroxPanel.classList.add('opacity-60');
+      if (nebulaPanel) nebulaPanel.classList.add('opacity-60');
+    } else if (theme === 'crimson') {
+      if (cardCrimson) cardCrimson.className = 'theme-select-card p-5 rounded-2xl border active bg-rose-950/20 border-rose-500/50 ring-1 ring-rose-500/30 flex flex-col justify-between space-y-4';
+      if (btnCrimson) {
+        btnCrimson.innerText = '✓ Active Theme';
+        btnCrimson.className = 'text-xs font-semibold px-3 py-1.5 rounded-lg btn-cyber';
+      }
+      if (arixPanel) arixPanel.classList.add('opacity-60');
+      if (liquidxPanel) liquidxPanel.classList.add('opacity-60');
+      if (pteroxPanel) pteroxPanel.classList.add('opacity-60');
+      if (nebulaPanel) nebulaPanel.classList.add('opacity-60');
     } else {
       if (cardNook) cardNook.className = 'theme-select-card p-5 rounded-2xl border active bg-cyan-950/20 border-cyan-500/50 flex flex-col justify-between space-y-4';
       if (btnNook) {
@@ -1847,7 +1979,7 @@ class SettingsManager {
   async loadWallpaperCategories() {
     try {
       const res = await app.api('/api/admin/settings/categories');
-      if (res.success && res.categories) {
+      if (res && res.success && Array.isArray(res.categories)) {
         this.categories = res.categories;
 
         // Populate Dropdown
@@ -1889,12 +2021,19 @@ class SettingsManager {
       }
 
       const res = await app.api(url);
-      if (res && res.wallpapers) {
-        this.wallpapers = res.wallpapers;
-        this.totalPages = res.totalPages || 1;
+      if (res && res.success) {
+        this.wallpapers = Array.isArray(res.wallpapers) ? res.wallpapers : [];
+        this.totalPages = Number(res.totalPages) || 1;
         this.renderWallpapers(this.wallpapers);
         this.renderPagination(res);
+
+        if (res.isFallback) {
+          app.toast('Wallpaper source is temporarily unavailable. Showing offline presets instead.', 'info');
+        }
+        return;
       }
+
+      throw new Error(res && res.error ? res.error : 'No wallpaper data returned');
     } catch (err) {
       console.error('Failed to load wallpapers:', err);
       app.toast('Failed to load wallpapers feed.', 'error');
@@ -1929,7 +2068,7 @@ class SettingsManager {
             <img src="${w.preview || w.thumb}" alt="${w.title}" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
 
             <!-- Top Action Buttons (Favorite & Download) -->
-            <div class="absolute top-2 right-2 flex items-center gap-1.5 z-10">
+            <div class="absolute top-2 right-2 z-10 flex gap-1">
               <!-- Favorite Button -->
               <button onclick="event.stopPropagation(); settingsManager.toggleFavorite('${w.id}')" title="${isFav ? 'Remove from Favorites' : 'Add to Favorites'}" class="wallpaper-fav-btn p-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-900 border border-white/15 text-slate-300 hover:text-rose-400 transition ${isFav ? 'active' : ''}">
                 <i data-lucide="heart" class="w-3.5 h-3.5 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>

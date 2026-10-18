@@ -190,3 +190,64 @@ html.theme-lucent.light .glass-input {
   color: #0f172a !important;
 }
 
+
+
+html.theme-aurora body {
+  background: radial-gradient(1100px 700px at 50% -10%, rgba(52, 211, 153, 0.16), transparent 60%),
+              radial-gradient(900px 600px at 100% 100%, rgba(34, 211, 238, 0.10), transparent 50%),
+              #071b1b !important;
+  color: #ecfeff;
+}
+
+html.theme-aurora .glass-panel,
+html.theme-aurora .glass-card {
+  background: rgba(9, 27, 29, 0.8) !important;
+  border-color: rgba(52, 211, 153, 0.25) !important;
+  box-shadow: 0 0 25px rgba(45, 212, 191, 0.15) !important;
+}
+
+html.theme-aurora .btn-cyber {
+  background: linear-gradient(135deg, #10b981 0%, #22d3ee 100%) !important;
+  color: #062b2d !important;
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.35) !important;
+}
+
+html.theme-solaris body {
+  background: radial-gradient(1100px 700px at 50% -10%, rgba(251, 191, 36, 0.18), transparent 60%),
+              radial-gradient(900px 600px at 100% 100%, rgba(249, 115, 22, 0.14), transparent 50%),
+              #1a1308 !important;
+  color: #fff7ed;
+}
+
+html.theme-solaris .glass-panel,
+html.theme-solaris .glass-card {
+  background: rgba(31, 22, 11, 0.82) !important;
+  border-color: rgba(251, 191, 36, 0.25) !important;
+  box-shadow: 0 0 25px rgba(251, 191, 36, 0.15) !important;
+}
+
+html.theme-solaris .btn-cyber {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%) !important;
+  color: #3b2200 !important;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.35) !important;
+}
+
+html.theme-crimson body {
+  background: radial-gradient(1100px 700px at 50% -10%, rgba(244, 63, 94, 0.18), transparent 60%),
+              radial-gradient(900px 600px at 100% 100%, rgba(251, 113, 133, 0.10), transparent 50%),
+              #12060c !important;
+  color: #fff1f2;
+}
+
+html.theme-crimson .glass-panel,
+html.theme-crimson .glass-card {
+  background: rgba(30, 8, 17, 0.82) !important;
+  border-color: rgba(251, 113, 133, 0.25) !important;
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.15) !important;
+}
+
+html.theme-crimson .btn-cyber {
+  background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.35) !important;
+}

@@ -1,13 +1,33 @@
 // TG-PANEL Authentication Controller
 class AuthController {
+  resolveLogoSource(rawValue, fallback = '/assets/logo.png') {
+    if (!rawValue || typeof rawValue !== 'string') return fallback;
+
+    const value = rawValue.trim();
+    if (!value) return fallback;
+
+    if (/^https?:\/\//i.test(value) || value.startsWith('/') || value.startsWith('./') || value.startsWith('../')) {
+      return value;
+    }
+
+    return `/${value.replace(/^\.?\//, '')}`;
+  }
+
+  closeModal() {
+    const modalContainer = document.getElementById('modal-container');
+    if (modalContainer) {
+      modalContainer.innerHTML = '';
+    }
+  }
+
   getBranding() {
     const settings = app?.settings || {};
     const activeTheme = localStorage.getItem('mpanel_active_theme') || settings.active_theme || 'arix';
     const isPterox = activeTheme === 'pterox';
 
     const savedPanelName = localStorage.getItem('mpanel_panel_name') || settings.panel_name || 'TG-PANEL';
-    const savedPanelLogo = localStorage.getItem('mpanel_panel_logo') || settings.panel_logo || '/assets/logo.png';
-    const savedFaviconLogo = localStorage.getItem('mpanel_favicon_logo') || settings.favicon_logo || savedPanelLogo;
+    const savedPanelLogo = this.resolveLogoSource(localStorage.getItem('mpanel_panel_logo') || settings.panel_logo || '/assets/logo.png');
+    const savedFaviconLogo = this.resolveLogoSource(localStorage.getItem('mpanel_favicon_logo') || settings.favicon_logo || savedPanelLogo);
 
     const brandName = isPterox ? (localStorage.getItem('pterox_brand_name') || settings.pterox_brand_name || 'PteroX') : savedPanelName;
     const loginLogo = savedPanelLogo || savedFaviconLogo || '/assets/logo.png';
@@ -23,56 +43,72 @@ class AuthController {
     const { isPterox, brandName, loginLogo } = this.getBranding();
 
     modalContainer.innerHTML = `
-      <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md ${isPterox ? 'theme-pterox' : ''}">
-        <div class="glass-panel w-full max-w-md p-6 sm:p-8 rounded-3xl border border-white/15 shadow-2xl relative">
-          <div class="text-center space-y-2 mb-6">
-            <div class="flex justify-center mb-2">
-              <img src="${loginLogo}?v=${Date.now()}" alt="${brandName}" class="h-12 w-auto object-contain drop-shadow max-w-[200px]" onerror="this.onerror=null; this.src='/assets/logo.png?v=${Date.now()}';">
-            </div>
-            <h3 class="text-xl font-extrabold text-white">Sign In to ${brandName}</h3>
-            <p class="text-xs text-slate-400">Enter your credentials to access your servers</p>
-          </div>
+      <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#020817]/80 backdrop-blur-xl">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.18),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(168,85,247,0.18),_transparent_30%)]"></div>
+        <div class="relative w-full max-w-md animate-[fadeIn_0.2s_ease-out]">
+          <button type="button" onclick="auth.closeModal()" class="absolute -top-2 right-0 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-slate-950/70 text-slate-300 shadow-lg shadow-black/40 transition hover:border-cyan-400/60 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
 
-          <form onsubmit="auth.handleLogin(event)" class="space-y-4">
-            <div id="login-error-alert" class="hidden p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-400 flex items-start gap-2.5">
-              <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
-              <span id="login-error-text"></span>
-            </div>
-
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Username or Email</label>
-              <input type="text" id="login-username" class="w-full glass-input px-3.5 py-2.5 rounded-xl text-xs" placeholder="admin or admin@tgpanel.local" autocapitalize="none" autocorrect="off" autocomplete="username" required autofocus>
-            </div>
-            <div>
-              <div class="flex justify-between items-center mb-1">
-                <label class="block text-xs font-semibold text-slate-300">Password</label>
-                <a href="javascript:void(0)" onclick="auth.showForgotPassword()" class="text-[11px] text-cyan-400 hover:underline">Forgot password?</a>
+          <div class="glass-panel relative overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/70 p-6 sm:p-7 shadow-[0_30px_80px_rgba(15,23,42,0.9)] ${isPterox ? 'theme-pterox' : ''}">
+            <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-violet-500/10"></div>
+            <div class="relative">
+              <div class="mb-6 text-center">
+                <div class="mb-4 flex justify-center">
+                  <div class="rounded-2xl border border-cyan-400/20 bg-slate-900/70 p-3 shadow-[0_0_25px_rgba(34,211,238,0.25)]">
+                    <img src="${this.resolveLogoSource(loginLogo, '/assets/logo.png')}?v=${Date.now()}" alt="${brandName}" class="h-12 w-auto max-w-[180px] object-contain drop-shadow-[0_0_18px_rgba(34,211,238,0.4)]" onerror="this.onerror=null; this.src='/assets/logo.png?v=${Date.now()}';">
+                  </div>
+                </div>
+                <p class="mb-1 text-[10px] font-bold uppercase tracking-[0.32em] text-cyan-400/80">Welcome back</p>
+                <h3 class="text-2xl font-black text-white">Sign In to ${brandName}</h3>
+                <p class="mt-2 text-xs text-slate-400">Enter your credentials to access your servers</p>
               </div>
-              <input type="password" id="login-password" class="w-full glass-input px-3.5 py-2.5 rounded-xl text-xs" placeholder="••••••••" autocomplete="current-password" required>
+
+              <form onsubmit="auth.handleLogin(event)" class="space-y-4">
+                <div id="login-error-alert" class="hidden rounded-2xl border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+                  <div class="flex items-start gap-2.5">
+                    <i data-lucide="alert-circle" class="mt-0.5 h-4 w-4 shrink-0"></i>
+                    <span id="login-error-text"></span>
+                  </div>
+                </div>
+
+                <div class="space-y-2">
+                  <label class="block text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-300">Username or Email</label>
+                  <input type="text" id="login-username" class="w-full rounded-2xl border border-white/10 bg-slate-900/70 px-3.5 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20" placeholder="admin or admin@tgpanel.local" autocapitalize="none" autocorrect="off" autocomplete="username" required autofocus>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label class="block text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-300">Password</label>
+                    <a href="javascript:void(0)" onclick="auth.showForgotPassword()" class="text-[11px] font-medium text-cyan-400 transition hover:text-cyan-300 hover:underline">Forgot password?</a>
+                  </div>
+                  <input type="password" id="login-password" class="w-full rounded-2xl border border-white/10 bg-slate-900/70 px-3.5 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20" placeholder="••••••••" autocomplete="current-password" required>
+                </div>
+
+                <div id="login-2fa-container" class="hidden space-y-2 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 p-3">
+                  <label class="block text-[11px] font-semibold uppercase tracking-[0.12em] text-cyan-300">Two-Factor Authenticator Code</label>
+                  <input type="text" id="login-2fa-code" class="w-full rounded-xl border border-cyan-400/30 bg-slate-950/70 px-3 py-2.5 text-center text-sm font-mono tracking-[0.45em] text-cyan-200 placeholder:text-slate-500 outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-500/20" placeholder="123456" maxlength="6">
+                </div>
+
+                <button type="submit" id="login-submit-btn" class="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 px-4 py-3 text-sm font-bold text-white shadow-[0_12px_30px_rgba(14,165,233,0.35)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70">
+                  <span>Sign In</span>
+                </button>
+              </form>
+
+              <div id="social-auth-section" class="hidden mt-5 border-t border-white/10 pt-4">
+                <div class="relative mb-3 flex items-center">
+                  <div class="h-px flex-1 bg-white/10"></div>
+                  <span class="mx-3 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Or continue with</span>
+                  <div class="h-px flex-1 bg-white/10"></div>
+                </div>
+                <div id="social-auth-buttons" class="grid grid-cols-1 gap-2 sm:grid-cols-2"></div>
+              </div>
+
+              <div class="mt-5 border-t border-white/10 pt-4 text-center text-xs text-slate-400">
+                Don't have an account? 
+                <a href="javascript:void(0)" onclick="auth.showRegisterModal()" class="font-semibold text-cyan-400 transition hover:text-cyan-300 hover:underline">Create Account</a>
+              </div>
             </div>
-
-            <div id="login-2fa-container" class="hidden space-y-1 bg-cyan-500/10 p-3 rounded-xl border border-cyan-500/30">
-              <label class="block text-xs font-bold text-cyan-300">Two-Factor Authenticator Code</label>
-              <input type="text" id="login-2fa-code" class="w-full glass-input px-3 py-2 rounded-xl text-xs font-mono tracking-widest text-center" placeholder="123456" maxlength="6">
-            </div>
-
-            <button type="submit" id="login-submit-btn" class="btn-cyber w-full py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2">
-              <span>Sign In</span>
-            </button>
-          </form>
-
-          <div id="social-auth-section" class="hidden mt-4 pt-3 border-t border-white/10">
-            <div class="relative flex py-1 items-center mb-2.5">
-              <div class="flex-grow border-t border-white/10"></div>
-              <span class="flex-shrink mx-3 text-[10px] uppercase tracking-wider font-semibold text-slate-400">Or continue with</span>
-              <div class="flex-grow border-t border-white/10"></div>
-            </div>
-            <div id="social-auth-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
-          </div>
-
-          <div class="mt-6 text-center pt-4 border-t border-white/10 text-xs text-slate-400">
-            Don't have an account?
-            <a href="javascript:void(0)" onclick="auth.showRegisterModal()" class="text-cyan-400 font-semibold hover:underline">Create Account</a>
           </div>
         </div>
       </div>
@@ -88,52 +124,69 @@ class AuthController {
     const { isPterox, brandName, loginLogo } = this.getBranding();
 
     modalContainer.innerHTML = `
-      <div id="register-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md ${isPterox ? 'theme-pterox' : ''}">
-        <div class="glass-panel w-full max-w-md p-6 sm:p-8 rounded-3xl border border-white/15 shadow-2xl relative">
-          <div class="text-center space-y-2 mb-6">
-            <div class="flex justify-center mb-2">
-              <img src="${loginLogo}?v=${Date.now()}" alt="${brandName}" class="h-12 w-auto object-contain drop-shadow max-w-[200px]" onerror="this.onerror=null; this.src='/assets/logo.png?v=${Date.now()}';">
-            </div>
-            <h3 class="text-xl font-extrabold text-white">Create ${brandName} Account</h3>
-            <p class="text-xs text-slate-400">Join and start deploying game & app servers</p>
-          </div>
+      <div id="register-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#020817]/80 backdrop-blur-xl">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(168,85,247,0.18),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(34,211,238,0.16),_transparent_35%)]"></div>
+        <div class="relative w-full max-w-md animate-[fadeIn_0.2s_ease-out]">
+          <button type="button" onclick="auth.closeModal()" class="absolute -top-2 right-0 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-slate-950/70 text-slate-300 shadow-lg shadow-black/40 transition hover:border-violet-400/60 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
 
-          <form onsubmit="auth.handleRegister(event)" class="space-y-4">
-            <div id="register-error-alert" class="hidden p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-400 flex items-start gap-2.5">
-              <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
-              <span id="register-error-text"></span>
-            </div>
+          <div class="glass-panel relative overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/70 p-6 sm:p-7 shadow-[0_30px_80px_rgba(15,23,42,0.9)] ${isPterox ? 'theme-pterox' : ''}">
+            <div class="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-cyan-500/10"></div>
+            <div class="relative">
+              <div class="mb-6 text-center">
+                <div class="mb-4 flex justify-center">
+                  <div class="rounded-2xl border border-violet-400/20 bg-slate-900/70 p-3 shadow-[0_0_25px_rgba(168,85,247,0.2)]">
+                    <img src="${this.resolveLogoSource(loginLogo, '/assets/logo.png')}?v=${Date.now()}" alt="${brandName}" class="h-12 w-auto max-w-[180px] object-contain drop-shadow-[0_0_18px_rgba(34,211,238,0.35)]" onerror="this.onerror=null; this.src='/assets/logo.png?v=${Date.now()}';">
+                  </div>
+                </div>
+                <p class="mb-1 text-[10px] font-bold uppercase tracking-[0.32em] text-violet-400/80">Join us</p>
+                <h3 class="text-2xl font-black text-white">Create ${brandName} Account</h3>
+                <p class="mt-2 text-xs text-slate-400">Start deploying game and app servers in minutes</p>
+              </div>
 
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Username</label>
-              <input type="text" id="reg-username" class="w-full glass-input px-3.5 py-2.5 rounded-xl text-xs" placeholder="e.g. shadow_player" autocapitalize="none" autocorrect="off" autocomplete="username" required minlength="3">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
-              <input type="email" id="reg-email" class="w-full glass-input px-3.5 py-2.5 rounded-xl text-xs" placeholder="you@example.com" autocapitalize="none" autocorrect="off" autocomplete="email" required>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Password</label>
-              <input type="password" id="reg-password" class="w-full glass-input px-3.5 py-2.5 rounded-xl text-xs" placeholder="••••••••" autocomplete="new-password" required minlength="6">
-            </div>
+              <form onsubmit="auth.handleRegister(event)" class="space-y-4">
+                <div id="register-error-alert" class="hidden rounded-2xl border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+                  <div class="flex items-start gap-2.5">
+                    <i data-lucide="alert-circle" class="mt-0.5 h-4 w-4 shrink-0"></i>
+                    <span id="register-error-text"></span>
+                  </div>
+                </div>
 
-            <button type="submit" id="reg-submit-btn" class="btn-cyber-purple w-full py-2.5 rounded-xl text-xs font-bold shadow-lg flex items-center justify-center gap-2">
-              <span>Create Account</span>
-            </button>
-          </form>
+                <div class="space-y-2">
+                  <label class="block text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-300">Username</label>
+                  <input type="text" id="reg-username" class="w-full rounded-2xl border border-white/10 bg-slate-900/70 px-3.5 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20" placeholder="e.g. shadow_player" autocapitalize="none" autocorrect="off" autocomplete="username" required minlength="3">
+                </div>
 
-          <div id="social-auth-section" class="hidden mt-4 pt-3 border-t border-white/10">
-            <div class="relative flex py-1 items-center mb-2.5">
-              <div class="flex-grow border-t border-white/10"></div>
-              <span class="flex-shrink mx-3 text-[10px] uppercase tracking-wider font-semibold text-slate-400">Or continue with</span>
-              <div class="flex-grow border-t border-white/10"></div>
+                <div class="space-y-2">
+                  <label class="block text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-300">Email Address</label>
+                  <input type="email" id="reg-email" class="w-full rounded-2xl border border-white/10 bg-slate-900/70 px-3.5 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20" placeholder="you@example.com" autocapitalize="none" autocorrect="off" autocomplete="email" required>
+                </div>
+
+                <div class="space-y-2">
+                  <label class="block text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-300">Password</label>
+                  <input type="password" id="reg-password" class="w-full rounded-2xl border border-white/10 bg-slate-900/70 px-3.5 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20" placeholder="••••••••" autocomplete="new-password" required minlength="6">
+                </div>
+
+                <button type="submit" id="reg-submit-btn" class="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 px-4 py-3 text-sm font-bold text-white shadow-[0_12px_30px_rgba(168,85,247,0.35)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70">
+                  <span>Create Account</span>
+                </button>
+              </form>
+
+              <div id="social-auth-section" class="hidden mt-5 border-t border-white/10 pt-4">
+                <div class="relative mb-3 flex items-center">
+                  <div class="h-px flex-1 bg-white/10"></div>
+                  <span class="mx-3 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Or continue with</span>
+                  <div class="h-px flex-1 bg-white/10"></div>
+                </div>
+                <div id="social-auth-buttons" class="grid grid-cols-1 gap-2 sm:grid-cols-2"></div>
+              </div>
+
+              <div class="mt-5 border-t border-white/10 pt-4 text-center text-xs text-slate-400">
+                Already have an account? 
+                <a href="javascript:void(0)" onclick="auth.showLoginModal()" class="font-semibold text-cyan-400 transition hover:text-cyan-300 hover:underline">Sign In</a>
+              </div>
             </div>
-            <div id="social-auth-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
-          </div>
-
-          <div class="mt-6 text-center pt-4 border-t border-white/10 text-xs text-slate-400">
-            Already have an account?
-            <a href="javascript:void(0)" onclick="auth.showLoginModal()" class="text-cyan-400 font-semibold hover:underline">Sign In</a>
           </div>
         </div>
       </div>

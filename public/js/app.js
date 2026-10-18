@@ -1169,7 +1169,7 @@ class App {
     localStorage.setItem('mpanel_active_theme', activeTheme);
     this.activeTheme = activeTheme;
 
-    document.documentElement.classList.remove('theme-arix', 'theme-nook', 'theme-liquidx', 'theme-pterox', 'theme-nebula', 'theme-dezerx', 'theme-lucent');
+    document.documentElement.classList.remove('theme-arix', 'theme-nook', 'theme-liquidx', 'theme-pterox', 'theme-nebula', 'theme-dezerx', 'theme-lucent', 'theme-aurora', 'theme-solaris', 'theme-crimson');
 
     const logoEl = document.getElementById('header-logo-img');
     const subNameEl = document.getElementById('header-sub-name');
@@ -1206,6 +1206,30 @@ class App {
           } catch (e) {}
         }
         window.nebulaEditor.applyConfig();
+      }
+    } else if (activeTheme === 'aurora') {
+      document.documentElement.classList.add('theme-aurora');
+      if (logoEl && !hasCustomPanelLogo && (!s.panel_logo || s.panel_logo === '/assets/mpanel-logo.svg' || s.panel_logo === '/arix/Arix.png' || s.panel_logo === '/assets/liquidx-logo.svg' || s.panel_logo === '/images/pterox-header-logo.webp')) {
+        logoEl.src = '/assets/logo.png';
+      }
+      if (subNameEl && (!s.panel_name || s.panel_name === 'Angelillo15' || s.panel_name === 'TG-PANEL' || subNameEl.innerText.includes('Theme') || subNameEl.innerText.includes('Server Engine') || subNameEl.innerText.includes('PteroX'))) {
+        subNameEl.innerText = 'Aurora Pulse Theme';
+      }
+    } else if (activeTheme === 'solaris') {
+      document.documentElement.classList.add('theme-solaris');
+      if (logoEl && !hasCustomPanelLogo && (!s.panel_logo || s.panel_logo === '/assets/mpanel-logo.svg' || s.panel_logo === '/arix/Arix.png' || s.panel_logo === '/assets/liquidx-logo.svg' || s.panel_logo === '/images/pterox-header-logo.webp')) {
+        logoEl.src = '/assets/logo.png';
+      }
+      if (subNameEl && (!s.panel_name || s.panel_name === 'Angelillo15' || s.panel_name === 'TG-PANEL' || subNameEl.innerText.includes('Theme') || subNameEl.innerText.includes('Server Engine') || subNameEl.innerText.includes('PteroX'))) {
+        subNameEl.innerText = 'Solaris Glow Theme';
+      }
+    } else if (activeTheme === 'crimson') {
+      document.documentElement.classList.add('theme-crimson');
+      if (logoEl && !hasCustomPanelLogo && (!s.panel_logo || s.panel_logo === '/assets/mpanel-logo.svg' || s.panel_logo === '/arix/Arix.png' || s.panel_logo === '/assets/liquidx-logo.svg' || s.panel_logo === '/images/pterox-header-logo.webp')) {
+        logoEl.src = '/assets/logo.png';
+      }
+      if (subNameEl && (!s.panel_name || s.panel_name === 'Angelillo15' || s.panel_name === 'TG-PANEL' || subNameEl.innerText.includes('Theme') || subNameEl.innerText.includes('Server Engine') || subNameEl.innerText.includes('PteroX'))) {
+        subNameEl.innerText = 'Crimson Nova Theme';
       }
     } else {
       const banner = document.getElementById('nebula-alert-banner');

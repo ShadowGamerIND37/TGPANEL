@@ -41,7 +41,7 @@ class AuthController {
 
             <div>
               <label class="block text-xs font-semibold text-slate-300 mb-1">Username or Email</label>
-              <input type="text" id="login-username" class="w-full glass-input px-3.5 py-2.5 rounded-xl text-xs" placeholder="admin or admin@mpanel.local" autocapitalize="none" autocorrect="off" autocomplete="username" required autofocus>
+              <input type="text" id="login-username" class="w-full glass-input px-3.5 py-2.5 rounded-xl text-xs" placeholder="admin or admin@tgpanel.local" autocapitalize="none" autocorrect="off" autocomplete="username" required autofocus>
             </div>
             <div>
               <div class="flex justify-between items-center mb-1">

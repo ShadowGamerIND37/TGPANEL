@@ -85,7 +85,7 @@ async function seedDatabase() {
     const adminUuid = uuidv4();
     await query.run(
       'INSERT INTO users (uuid, username, email, password_hash, role) VALUES (?, ?, ?, ?, ?)',
-      [adminUuid, 'admin', 'admin@mpanel.local', passwordHash, 'admin']
+      [adminUuid, 'admin', 'admin@tgpanel.local', passwordHash, 'admin']
     );
     console.log('👑 Default Admin User created: username: "admin", password: "admin"');
   }

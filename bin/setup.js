@@ -109,7 +109,7 @@ SERVER_DB_DATABASE=mydatabase
   if (options.adminUser && options.adminPass) {
     const username = options.adminUser.trim();
     const password = options.adminPass.trim();
-    const email = options.adminEmail ? options.adminEmail.trim() : `${username}@mpanel.local`;
+    const email = options.adminEmail ? options.adminEmail.trim() : `${username}@tgpanel.local`;
     const passwordHash = await bcrypt.hash(password, 10);
     const uuid = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15);
 

@@ -449,13 +449,13 @@ pm2_menu() {
         pm2 start ecosystem.config.js && pm2 save
         return
     elif [ "$1" == "stop" ]; then
-        pm2 stop tgpanel && pm2 save
+        pm2 stop tg-panel && pm2 save
         return
     elif [ "$1" == "restart" ]; then
-        pm2 restart tgpanel
+        pm2 restart tg-panel
         return
     elif [ "$1" == "logs" ]; then
-        pm2 logs tgpanel
+        pm2 logs tg-panel
         return
     elif [ "$1" == "status" ]; then
         pm2 status
@@ -498,13 +498,13 @@ pm2_menu() {
                 ;;
             2)
                 echo -e "${YELLOW}Stopping TG-PANEL...${NC}"
-                pm2 stop tgpanel
+                pm2 stop tg-panel
                 pm2 save
                 read -n 1 -s -r -p "Press any key to continue..."
                 ;;
             3)
                 echo -e "${CYAN}Restarting TG-PANEL...${NC}"
-                pm2 restart tgpanel
+                pm2 restart tg-panel
                 read -n 1 -s -r -p "Press any key to continue..."
                 ;;
             4)
@@ -514,7 +514,7 @@ pm2_menu() {
                 ;;
             5)
                 echo -e "${CYAN}Opening PM2 Logs (Press Ctrl+C to return)...${NC}"
-                pm2 logs tgpanel
+                pm2 logs tg-panel
                 ;;
             6)
                 echo -e "${CYAN}Configuring system startup...${NC}"

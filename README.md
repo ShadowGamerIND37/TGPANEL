@@ -240,7 +240,7 @@ Found a bug or have an idea? [Open an issue](https://github.com/ShadowGamerIND37
 
 ## 👨‍💻 Credits
 
-- **Developer:** [ShadowGamerIND](https://discord.com/users/924366651443527710)
+- **Developer:** [ShadowGamerIND](https://discord.com/users/1339797978214567977)
 - **Website:** [tgpanel.in](https://tgpanel.in)
 - **License:** [MIT](LICENSE)
 

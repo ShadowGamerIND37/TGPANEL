@@ -22,6 +22,7 @@
 
 <p align="center">
   <a href="#-features">Features</a> ·
+  <a href="#-aurora-pro-ui">Aurora Pro UI</a> ·
   <a href="#-quick-start">Quick Start</a> ·
   <a href="#-architecture">Architecture</a> ·
   <a href="#-sftp-access">SFTP</a> ·
@@ -32,12 +33,12 @@
 
 ---
 
-<!-- TODO: add a real screenshot or GIF of the dashboard -->
-<!--
 <p align="center">
-  <img src="public/assets/screenshot-dashboard.png" width="90%" alt="Dashboard screenshot" />
+  <img src="docs/aurora-pro-dashboard.jpg" width="90%" alt="TG-PANEL Aurora Pro dashboard" />
 </p>
--->
+<p align="center">
+  <sub>Aurora Pro UI · <a href="docs/aurora-pro-command-palette.jpg">Command palette screenshot</a> · <a href="docs/UI-UPGRADE.md">UI documentation</a></sub>
+</p>
 
 ## ✨ Features
 
@@ -49,7 +50,36 @@
 | 🗄️ **Separate databases** | MariaDB for the panel, MySQL 8.4 for game servers |
 | 🧰 **Management menu** | One script to install, update, and maintain the panel |
 
-<!-- TODO: add or remove rows to match what the panel actually supports -->
+---
+
+## 🎨 Aurora Pro UI
+
+The panel ships with a modern, premium front-end layer (v4.0.0) that works on
+top of every built-in theme. Nothing was removed — you can switch back to the
+classic look per user at any time.
+
+| | |
+| :--- | :--- |
+| ⌨️ **Command palette** | `Ctrl/⌘ + K` to jump to any page, server or action. Press `?` for all shortcuts. |
+| 🎛️ **Appearance controls** | Dark / Daylight mode, 5 accent colours, comfortable / compact density, wallpaper intensity, focus mode, reduced motion. |
+| ✨ **Refined design system** | Consistent glass surfaces, typography, buttons, inputs, tables, toasts, modals and terminal styling. |
+| ⚡ **Feedback everywhere** | Top progress bar on API calls, view transitions, scroll-to-top, online/offline status, friendly network errors. |
+| ♿ **Accessible** | Skip link, focus rings, live region, current-page markers, zoom support, dialog roles. |
+| 📱 **Responsive** | Adaptive phone / tablet / desktop layouts with a mobile navigation drawer. |
+
+**Preview it without a database:**
+
+```bash
+npm run preview      # http://localhost:4173
+```
+
+The preview is a standalone, interactive showcase of the real design system.
+
+**Server-side improvements included:** JSON 404s for unknown API routes (they
+previously hung), `GET /api/health` for uptime checks, security headers, smarter
+static caching, and an error handler that returns JSON for API failures.
+
+Full details, shortcuts and the developer API: **[docs/UI-UPGRADE.md](docs/UI-UPGRADE.md)**.
 
 ---
 

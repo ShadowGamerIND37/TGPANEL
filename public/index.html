@@ -2,14 +2,18 @@
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="description" content="TG-PANEL — a fast, modern control panel for game and application servers.">
+  <meta name="theme-color" content="#05070d">
   <title id="tab-title">TG-PANEL</title>
   <link id="tab-favicon" rel="icon" type="image/png" href="/assets/logo.png">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
+    // Guarded: if the CDN is unreachable the panel still boots (the local
+    // premium.css supplies the shell layout in that case).
+    window.tailwindConfig = {
       darkMode: 'class',
       theme: {
         extend: {
@@ -26,6 +30,9 @@
           }
         }
       }
+    };
+    if (window.tailwind) {
+      window.tailwind.config = window.tailwindConfig;
     }
   </script>
 
@@ -43,18 +50,27 @@
   <!-- Ace Editor -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.js"></script>
 
-  <!-- Fonts for LiquidX Theme (Cinzel & Inter) -->
+  <!-- Fonts: Plus Jakarta Sans (display), Inter (UI), JetBrains Mono (data), Cinzel (LiquidX) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/style.css?v=3.5.5">
   <link rel="stylesheet" href="/css/themes/nebula.css?v=2.0.0">
   <link rel="stylesheet" href="/css/themes/dezerx.css?v=1.0.0">
   <link rel="stylesheet" href="/css/themes/lucent.css?v=2.0.0">
+
+  <!-- Aurora Pro design system — loaded last so it can refine every theme.
+       Toggle it at runtime from Appearance → Premium styling. -->
+  <link id="ux-premium-css" rel="stylesheet" href="/css/premium.css?v=4.0.0">
 </head>
 <body class="h-screen max-h-screen overflow-hidden text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-white">
+  <noscript>
+    <div style="position:fixed;inset:0;z-index:200000;display:grid;place-items:center;background:#05070d;color:#eef3fb;font-family:system-ui;text-align:center;padding:24px">
+      <div><h2 style="font-size:20px;margin:0 0 8px">JavaScript is required</h2><p style="font-size:13px;color:#94a3b8">TG-PANEL is a single-page application. Please enable JavaScript to continue.</p></div>
+    </div>
+  </noscript>
 
   <!-- Wallpaper and Overlay Background Layers -->
   <div id="wallpaper-layer"></div>
@@ -72,16 +88,16 @@
         <i data-lucide="menu" class="w-5 h-5"></i>
       </button>
       <div id="header-logo-container" class="w-9 h-9 flex items-center justify-center rounded-xl bg-[#212121] border border-white/10 p-1.5 shadow-md">
-        <img id="header-logo-img" src="/assets/logo.png?v=${Date.now()}" alt="TG-PANEL Logo" class="w-full h-full object-contain" onerror="this.src='/assets/logo.png?v='+Date.now()">
+        <img id="header-logo-img" src="/assets/logo.png" alt="TG-PANEL Logo" class="w-full h-full object-contain" onerror="this.onerror=null;this.src='/assets/favicon.svg';">
       </div>
       <div>
-        <h1 id="header-panel-name" class="text-lg font-bold tracking-wide text-white leading-tight">Angelillo15</h1>
-        <p id="header-sub-name" class="text-[10px] text-slate-400 tracking-wider font-medium">TG-PANEL Server Engine</p>
+        <h1 id="header-panel-name" class="text-lg font-bold tracking-wide text-white leading-tight">TG-PANEL</h1>
+        <p id="header-sub-name" class="text-[10px] text-slate-400 tracking-wider font-medium">Server Control Engine</p>
       </div>
     </div>
 
     <!-- Right Header Controls (NookTheme style) -->
-    <div class="flex items-center gap-2 sm:gap-3">
+    <div id="header-actions" class="flex items-center gap-2 sm:gap-3">
       <!-- Quick Search Action -->
       <button onclick="app.showServerSwitcherModal()" title="Search & Switch Servers" class="w-9 h-9 flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition">
         <i data-lucide="search" class="w-4 h-4"></i>
@@ -459,6 +475,9 @@
   <script src="/js/updates.js?v=2.4.0"></script>
   <script src="/js/admin.js?v=3.6.1"></script>
   <script src="/js/adminAddons.js?v=3.6.1"></script>
+
+  <!-- Aurora Pro UX engine: command palette, shortcuts, appearance, a11y, fixes -->
+  <script src="/js/ux.js?v=4.0.0"></script>
 
   <script>
     // Initialize icons on DOM load

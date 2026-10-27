@@ -1,0 +1,905 @@
+/* ==========================================================================
+   TG-PANEL — "AURORA PRO" DESIGN SYSTEM  v4.0.0
+   --------------------------------------------------------------------------
+   A modern, premium visual layer that sits on top of the legacy stylesheets.
+   It is intentionally additive: every legacy class keeps working, but the
+   shell, surfaces, controls and feedback get a consistent design language.
+
+   Loaded LAST (after style.css + all theme files). Can be turned off at
+   runtime by disabling #ux-premium-css from the Appearance popover.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  --ux-font-sans: 'Inter', 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ux-font-display: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --ux-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --ux-ink-900: #05070d;
+  --ux-ink-800: #080b13;
+  --ux-ink-700: #0c1019;
+  --ux-ink-600: #111725;
+  --ux-ink-500: #18202f;
+
+  --ux-surface: rgba(15, 20, 32, 0.78);
+  --ux-surface-strong: rgba(12, 17, 28, 0.92);
+  --ux-surface-soft: rgba(30, 39, 56, 0.55);
+  --ux-surface-hover: rgba(38, 49, 70, 0.62);
+
+  --ux-line: rgba(148, 163, 184, 0.12);
+  --ux-line-strong: rgba(148, 163, 184, 0.22);
+  --ux-line-soft: rgba(148, 163, 184, 0.07);
+
+  --ux-text: #eef3fb;
+  --ux-text-strong: #ffffff;
+  --ux-text-muted: #94a3b8;
+  --ux-text-faint: #64748b;
+
+  --ux-accent: #38bdf8;
+  --ux-accent-rgb: 56, 189, 248;
+  --ux-accent-2: #8b5cf6;
+  --ux-accent-2-rgb: 139, 92, 246;
+  --ux-accent-ink: #04121c;
+  --ux-success: #34d399;
+  --ux-warning: #fbbf24;
+  --ux-danger: #fb7185;
+  --ux-info: #60a5fa;
+
+  --ux-radius-xs: 9px;
+  --ux-radius-sm: 12px;
+  --ux-radius: 16px;
+  --ux-radius-lg: 20px;
+  --ux-radius-xl: 26px;
+
+  --ux-shadow-sm: 0 2px 8px rgba(2, 6, 16, 0.28);
+  --ux-shadow: 0 14px 34px -12px rgba(2, 6, 16, 0.72), 0 2px 8px rgba(2, 6, 16, 0.3);
+  --ux-shadow-lg: 0 32px 70px -20px rgba(2, 6, 16, 0.85), 0 8px 24px rgba(2, 6, 16, 0.45);
+  --ux-shadow-glow: 0 0 0 1px rgba(var(--ux-accent-rgb), 0.24), 0 12px 36px -10px rgba(var(--ux-accent-rgb), 0.32);
+
+  --ux-header-h: 64px;
+  --ux-sidebar-w: 252px;
+  --ux-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ux-speed: 220ms;
+  --ux-wallpaper-opacity: 0.26;
+
+  --card-border: var(--ux-line);
+  --accent-color: var(--ux-accent);
+}
+
+/* Accent collections — switched live from the Appearance popover */
+html[data-ux-accent="violet"] { --ux-accent: #a78bfa; --ux-accent-rgb: 167, 139, 250; --ux-accent-2: #38bdf8; --ux-accent-2-rgb: 56, 189, 248; --ux-accent-ink: #170a2b; }
+html[data-ux-accent="emerald"] { --ux-accent: #34d399; --ux-accent-rgb: 52, 211, 153; --ux-accent-2: #22d3ee; --ux-accent-2-rgb: 34, 211, 238; --ux-accent-ink: #032017; }
+html[data-ux-accent="amber"] { --ux-accent: #fbbf24; --ux-accent-rgb: 251, 191, 36; --ux-accent-2: #fb7185; --ux-accent-2-rgb: 251, 113, 133; --ux-accent-ink: #241703; }
+html[data-ux-accent="rose"] { --ux-accent: #fb7185; --ux-accent-rgb: 251, 113, 133; --ux-accent-2: #c084fc; --ux-accent-2-rgb: 192, 132, 252; --ux-accent-ink: #2b0710; }
+html[data-ux-accent="cyan"] { --ux-accent: #22d3ee; --ux-accent-rgb: 34, 211, 238; --ux-accent-2: #818cf8; --ux-accent-2-rgb: 129, 140, 248; --ux-accent-ink: #03222b; }
+
+/* --------------------------------------------------------------------------
+   2. FOUNDATION / ATMOSPHERE
+   -------------------------------------------------------------------------- */
+html body {
+  font-family: var(--ux-font-sans) !important;
+  color: var(--ux-text) !important;
+  background-color: var(--ux-ink-900) !important;
+  background-image:
+    radial-gradient(1100px 620px at 8% -8%, rgba(var(--ux-accent-rgb), 0.11), transparent 62%),
+    radial-gradient(900px 620px at 100% 0%, rgba(var(--ux-accent-2-rgb), 0.11), transparent 58%),
+    radial-gradient(800px 700px at 62% 110%, rgba(56, 189, 248, 0.05), transparent 62%),
+    linear-gradient(180deg, var(--ux-ink-900) 0%, var(--ux-ink-800) 55%, var(--ux-ink-900) 100%) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html body #wallpaper-layer {
+  opacity: var(--ux-wallpaper-opacity) !important;
+  filter: saturate(0.8) contrast(1.02) blur(1px);
+  transition: opacity var(--ux-speed) var(--ux-ease);
+}
+
+html body #wallpaper-video { opacity: 0.2; }
+
+html body #overlay-layer {
+  background:
+    linear-gradient(180deg, rgba(5, 7, 13, 0.34) 0%, rgba(5, 7, 13, 0.62) 100%),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 255, 255, 0.009) 3px 4px) !important;
+}
+
+html body h1, html body h2, html body h3, html body h4 {
+  font-family: var(--ux-font-display);
+  letter-spacing: -0.022em;
+}
+
+html body ::selection { background: rgba(var(--ux-accent-rgb), 0.32); color: #fff; }
+
+html body :focus-visible {
+  outline: 2px solid rgba(var(--ux-accent-rgb), 0.9) !important;
+  outline-offset: 2px;
+}
+
+html body .custom-scrollbar,
+html body #main-content,
+html body #sidebar-scroll-container,
+html body * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--ux-accent-rgb), 0.42) transparent;
+}
+html body ::-webkit-scrollbar { width: 9px; height: 9px; }
+html body ::-webkit-scrollbar-track { background: transparent; }
+html body ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(var(--ux-accent-rgb), 0.5), rgba(var(--ux-accent-2-rgb), 0.38));
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+html body ::-webkit-scrollbar-thumb:hover { background: rgba(var(--ux-accent-rgb), 0.8); background-clip: padding-box; }
+
+/* --------------------------------------------------------------------------
+   3. TOPBAR
+   -------------------------------------------------------------------------- */
+html body #main-header.nook-topbar {
+  height: var(--ux-header-h) !important;
+  min-height: var(--ux-header-h) !important;
+  padding: 0 18px !important;
+  background: linear-gradient(180deg, rgba(14, 19, 30, 0.9), rgba(10, 14, 23, 0.82)) !important;
+  border-bottom: 1px solid var(--ux-line) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.025) inset, 0 10px 32px -18px rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+}
+
+html body #main-header::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--ux-accent-rgb), 0.5), rgba(var(--ux-accent-2-rgb), 0.35), transparent);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+html body #main-header #header-logo-container {
+  width: 38px !important; height: 38px !important;
+  border-radius: var(--ux-radius-sm) !important;
+  background: linear-gradient(145deg, rgba(var(--ux-accent-rgb), 0.14), rgba(var(--ux-accent-2-rgb), 0.1)) !important;
+  border: 1px solid rgba(var(--ux-accent-rgb), 0.25) !important;
+  box-shadow: 0 6px 18px -8px rgba(var(--ux-accent-rgb), 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  transition: transform var(--ux-speed) var(--ux-ease), box-shadow var(--ux-speed) var(--ux-ease);
+}
+html body #main-header > div:first-child:hover #header-logo-container { transform: rotate(-5deg) scale(1.06); }
+
+html body #header-panel-name {
+  font-family: var(--ux-font-display);
+  font-weight: 800 !important;
+  font-size: 16px !important;
+  letter-spacing: -0.03em;
+  background: linear-gradient(100deg, #ffffff 20%, rgba(var(--ux-accent-rgb), 1) 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+html body #header-sub-name {
+  color: var(--ux-text-faint) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.14em !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+}
+
+/* Header icon buttons — the UX engine tags the legacy icon buttons with
+   .ux-icon-btn so this rule never squashes text buttons or the search pill. */
+html body #main-header #header-actions > button.ux-icon-btn {
+  width: 36px !important; height: 36px !important;
+  border-radius: var(--ux-radius-sm) !important;
+  color: var(--ux-text-muted) !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  transition: all var(--ux-speed) var(--ux-ease) !important;
+}
+html body #main-header #header-actions > button.ux-icon-btn:hover {
+  color: var(--ux-accent) !important;
+  background: rgba(var(--ux-accent-rgb), 0.1) !important;
+  border-color: rgba(var(--ux-accent-rgb), 0.22) !important;
+  transform: translateY(-1px);
+}
+html body #main-header #header-admin-toggle-btn { width: auto !important; padding: 7px 12px !important; }
+
+html body #user-menu-btn {
+  width: auto !important;
+  padding: 5px 9px 5px 5px !important;
+  background: var(--ux-surface) !important;
+  border: 1px solid var(--ux-line) !important;
+  border-radius: var(--ux-radius-sm) !important;
+  box-shadow: var(--ux-shadow-sm) !important;
+}
+html body #user-avatar-initials { font-family: var(--ux-font-display); font-weight: 800; }
+html body #user-menu-btn > div {
+  border-radius: 9px !important;
+  background: linear-gradient(135deg, var(--ux-accent), var(--ux-accent-2)) !important;
+  color: var(--ux-accent-ink) !important;
+  box-shadow: 0 4px 14px -4px rgba(var(--ux-accent-rgb), 0.8);
+}
+
+html body #user-dropdown-dropdown,
+html body #header-device-dropdown {
+  background: var(--ux-surface-strong) !important;
+  border: 1px solid var(--ux-line-strong) !important;
+  border-radius: var(--ux-radius) !important;
+  box-shadow: var(--ux-shadow-lg) !important;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  padding: 8px !important;
+  animation: ux-pop var(--ux-speed) var(--ux-ease) both;
+}
+html body #user-dropdown-dropdown a,
+html body .device-opt-btn {
+  border-radius: var(--ux-radius-xs) !important;
+  transition: background var(--ux-speed) var(--ux-ease), color var(--ux-speed) var(--ux-ease) !important;
+}
+html body #user-dropdown-dropdown a:hover,
+html body .device-opt-btn:hover { background: rgba(var(--ux-accent-rgb), 0.1) !important; color: #fff !important; }
+
+/* --------------------------------------------------------------------------
+   4. SIDEBAR
+   -------------------------------------------------------------------------- */
+html body #app-layout-body {
+  height: calc(100dvh - var(--ux-header-h)) !important;
+  max-height: calc(100dvh - var(--ux-header-h)) !important;
+  background: transparent !important;
+}
+
+html body #main-sidebar.nook-sidebar {
+  width: var(--ux-sidebar-w) !important;
+  padding: 14px 12px 12px !important;
+  background: linear-gradient(180deg, rgba(11, 16, 26, 0.88), rgba(9, 13, 22, 0.78)) !important;
+  border-right: 1px solid var(--ux-line) !important;
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.02) inset, 12px 0 40px -30px rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+}
+html body #sidebar-scroll-container { padding-right: 4px !important; }
+
+html body #main-sidebar p {
+  font-size: 9.5px !important;
+  letter-spacing: 0.16em !important;
+  color: var(--ux-text-faint) !important;
+  text-transform: uppercase;
+}
+
+html body .nook-nav-item {
+  gap: 11px !important;
+  padding: 8px 10px !important;
+  min-height: 40px;
+  border-radius: var(--ux-radius-sm) !important;
+  color: var(--ux-text-muted) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent !important;
+  transition: all var(--ux-speed) var(--ux-ease) !important;
+}
+html body .nook-nav-item::before {
+  background: linear-gradient(90deg, rgba(var(--ux-accent-rgb), 0.13), rgba(var(--ux-accent-2-rgb), 0.05), transparent 75%) !important;
+}
+html body .nook-nav-item:hover {
+  color: var(--ux-text-strong) !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+  border-color: var(--ux-line-soft) !important;
+  transform: translateX(2px);
+}
+html body .nook-nav-item.active {
+  color: #fff !important;
+  background: linear-gradient(90deg, rgba(var(--ux-accent-rgb), 0.19), rgba(var(--ux-accent-2-rgb), 0.07)) !important;
+  border-color: rgba(var(--ux-accent-rgb), 0.28) !important;
+  box-shadow: inset 3px 0 0 var(--ux-accent), 0 8px 22px -14px rgba(var(--ux-accent-rgb), 0.9) !important;
+  font-weight: 700 !important;
+}
+html body .nook-icon-box {
+  width: 30px !important; height: 30px !important;
+  border-radius: 9px !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid var(--ux-line-soft) !important;
+  color: var(--ux-text-muted) !important;
+  box-shadow: none !important;
+  transition: all var(--ux-speed) var(--ux-ease) !important;
+}
+html body .nook-icon-box svg { width: 16px; height: 16px; }
+html body .nook-nav-item:hover .nook-icon-box {
+  color: var(--ux-accent) !important;
+  background: rgba(var(--ux-accent-rgb), 0.12) !important;
+  border-color: rgba(var(--ux-accent-rgb), 0.18) !important;
+}
+html body .nook-nav-item.active .nook-icon-box {
+  background: linear-gradient(140deg, var(--ux-accent), var(--ux-accent-2)) !important;
+  color: var(--ux-accent-ink) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 6px 16px -6px rgba(var(--ux-accent-rgb), 0.9) !important;
+}
+
+/* Admin switch card */
+html body #portal-admin-switch-card > button {
+  border-radius: var(--ux-radius-sm) !important;
+  background: linear-gradient(100deg, rgba(var(--ux-accent-2-rgb), 0.16), rgba(var(--ux-accent-rgb), 0.1)) !important;
+  border: 1px solid rgba(var(--ux-accent-2-rgb), 0.28) !important;
+  transition: all var(--ux-speed) var(--ux-ease) !important;
+}
+html body #portal-admin-switch-card > button:hover { box-shadow: var(--ux-shadow-glow); transform: translateY(-1px); }
+
+/* --------------------------------------------------------------------------
+   5. MAIN CONTENT / VIEW TRANSITIONS
+   -------------------------------------------------------------------------- */
+html body #main-content {
+  background: transparent !important;
+  border-left: none !important;
+  padding: 22px 26px !important;
+  scroll-behavior: smooth;
+}
+/* Views must never be squeezed by the fixed-height scroll shell: they grow
+   to fill the viewport but keep their natural height when content is tall. */
+html body #view-container { flex: 1 0 auto !important; animation: ux-view-in 320ms var(--ux-ease) both; }
+html body #view-container > * { animation: ux-view-in 320ms var(--ux-ease) both; }
+
+/* Keep notifications clear of the topbar. */
+html body #toast-container {
+  top: calc(var(--ux-header-h) + 14px) !important;
+  right: 18px !important;
+}
+
+html body #mpanel-global-footer-watermark {
+  border-top: 1px solid var(--ux-line-soft) !important;
+  padding-top: 26px !important;
+  opacity: 0.72;
+}
+html body #mpanel-global-footer-watermark > div {
+  background: var(--ux-surface) !important;
+  border: 1px solid var(--ux-line) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. CARDS & SURFACES
+   -------------------------------------------------------------------------- */
+html body .glass-panel,
+html body .glass-card,
+html body .nook-stat-card,
+html body .nook-stat-card-mini,
+html body .nook-chart-card,
+html body .nook-parsent-card,
+html body .nook-terminal-box {
+  background: linear-gradient(160deg, rgba(22, 29, 44, 0.82), rgba(12, 17, 28, 0.9)) !important;
+  border: 1px solid var(--ux-line) !important;
+  border-radius: var(--ux-radius-lg) !important;
+  box-shadow: var(--ux-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.035) !important;
+  backdrop-filter: blur(var(--card-blur, 16px)) saturate(1.15);
+  -webkit-backdrop-filter: blur(var(--card-blur, 16px)) saturate(1.15);
+  transition: transform var(--ux-speed) var(--ux-ease), border-color var(--ux-speed) var(--ux-ease), box-shadow var(--ux-speed) var(--ux-ease) !important;
+  position: relative;
+}
+html body .glass-panel::after,
+html body .glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  pointer-events: none;
+  border-radius: inherit;
+}
+html body .glass-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(var(--ux-accent-rgb), 0.34) !important;
+  box-shadow: 0 22px 46px -18px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(var(--ux-accent-rgb), 0.12) !important;
+}
+
+html body .nook-stat-card-mini { padding: 12px 14px !important; }
+html body .nook-stat-title-mini { color: var(--ux-text-faint) !important; letter-spacing: 0.1em !important; }
+html body .nook-stat-value-mini { font-family: var(--ux-font-mono) !important; font-size: 11px !important; }
+html body .nook-parsent-val,
+html body .nook-parsent-pct { font-family: var(--ux-font-mono) !important; }
+html body .nook-parsent-track { background: rgba(148, 163, 184, 0.1) !important; height: 6px !important; }
+html body .nook-parsent-bar { box-shadow: 0 0 12px currentColor; }
+
+/* Icon tiles inside stat cards */
+html body .glass-card > div[class*="rounded-xl"][class*="bg-"],
+html body .glass-card > div[class*="rounded-2xl"][class*="bg-"] {
+  border-radius: var(--ux-radius-sm) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* --------------------------------------------------------------------------
+   7. BUTTONS
+   -------------------------------------------------------------------------- */
+html body button { cursor: pointer; }
+html body button:disabled { cursor: not-allowed; opacity: 0.5; transform: none !important; }
+
+html body .btn-nook-start,
+html body .btn-cyber,
+html body .btn-primary {
+  background: linear-gradient(120deg, var(--ux-accent), var(--ux-accent-2)) !important;
+  color: var(--ux-accent-ink) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: var(--ux-radius-sm) !important;
+  font-weight: 750 !important;
+  font-family: var(--ux-font-display) !important;
+  letter-spacing: -0.01em;
+  padding: 9px 17px !important;
+  box-shadow: 0 10px 24px -10px rgba(var(--ux-accent-rgb), 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+  transition: transform var(--ux-speed) var(--ux-ease), box-shadow var(--ux-speed) var(--ux-ease), filter var(--ux-speed) var(--ux-ease) !important;
+}
+html body .btn-nook-start:hover,
+html body .btn-cyber:hover,
+html body .btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 16px 30px -10px rgba(var(--ux-accent-rgb), 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+html body .btn-nook-stop {
+  background: linear-gradient(120deg, #f43f5e, #e11d48) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: var(--ux-radius-sm) !important;
+  box-shadow: 0 10px 24px -10px rgba(244, 63, 94, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transition: all var(--ux-speed) var(--ux-ease) !important;
+}
+html body .btn-nook-stop:hover { transform: translateY(-2px); filter: brightness(1.08); }
+html body .btn-nook-restart {
+  background: linear-gradient(120deg, rgba(71, 85, 105, 0.9), rgba(51, 65, 85, 0.9)) !important;
+  border: 1px solid var(--ux-line-strong) !important;
+  border-radius: var(--ux-radius-sm) !important;
+  transition: all var(--ux-speed) var(--ux-ease) !important;
+}
+html body .btn-nook-restart:hover { transform: translateY(-2px); filter: brightness(1.15); }
+
+/* Secondary / ghost buttons (Tailwind-shaped) */
+html body button[class*="bg-white/5"],
+html body button[class*="bg-slate-800"],
+html body button[class*="bg-white/10"] {
+  border-color: var(--ux-line) !important;
+}
+html body button:active:not(:disabled) { transform: scale(0.97); }
+
+/* Link-style actions */
+html body a[class*="text-cyan-400"],
+html body a[class*="text-sky-400"] { color: var(--ux-accent) !important; }
+
+/* --------------------------------------------------------------------------
+   8. FORMS
+   -------------------------------------------------------------------------- */
+html body input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([class*="xterm"]):not([class*="ace_"]),
+html body select:not([class*="xterm"]):not([class*="ace_"]),
+html body textarea:not([class*="xterm"]):not([class*="ace_"]) {
+  background-color: rgba(10, 15, 25, 0.72) !important;
+  border: 1px solid var(--ux-line-strong) !important;
+  border-radius: var(--ux-radius-sm) !important;
+  color: var(--ux-text) !important;
+  font-family: var(--ux-font-sans) !important;
+  font-size: 13px !important;
+  padding: 10px 13px !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22) !important;
+  transition: border-color var(--ux-speed) var(--ux-ease), box-shadow var(--ux-speed) var(--ux-ease), background var(--ux-speed) var(--ux-ease) !important;
+}
+html body input::placeholder,
+html body textarea::placeholder { color: var(--ux-text-faint) !important; opacity: 1; }
+html body input:not([type="checkbox"]):not([type="radio"]):not([class*="xterm"]):not([class*="ace_"]):focus,
+html body select:not([class*="xterm"]):not([class*="ace_"]):focus,
+html body textarea:not([class*="xterm"]):not([class*="ace_"]):focus {
+  border-color: rgba(var(--ux-accent-rgb), 0.7) !important;
+  box-shadow: 0 0 0 3px rgba(var(--ux-accent-rgb), 0.14), inset 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  outline: none !important;
+}
+html body select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 34px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+}
+html body select option { background: #0f1522; color: #eef3fb; }
+html body input[type="checkbox"],
+html body input[type="radio"] { accent-color: var(--ux-accent); width: 16px; height: 16px; }
+html body input[type="range"] { accent-color: var(--ux-accent); }
+html body label { color: var(--ux-text-muted); }
+
+/* --------------------------------------------------------------------------
+   9. TABLES / LISTS / BADGES
+   -------------------------------------------------------------------------- */
+html body table { border-collapse: separate; border-spacing: 0; width: 100%; }
+html body thead th {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 10px !important;
+  font-weight: 750 !important;
+  color: var(--ux-text-faint) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-bottom: 1px solid var(--ux-line) !important;
+  padding: 12px 14px !important;
+}
+html body tbody td { border-bottom: 1px solid var(--ux-line-soft) !important; padding: 12px 14px !important; }
+html body tbody tr { transition: background var(--ux-speed) var(--ux-ease); }
+html body tbody tr:hover { background: rgba(var(--ux-accent-rgb), 0.045) !important; }
+
+html body hr { border-color: var(--ux-line) !important; }
+
+/* --------------------------------------------------------------------------
+   10. MODALS / TOASTS / FEEDBACK
+   -------------------------------------------------------------------------- */
+html body #modal-container > div { animation: ux-fade-in 200ms var(--ux-ease) both; }
+html body #modal-container .glass-panel {
+  box-shadow: var(--ux-shadow-lg), 0 0 0 1px rgba(var(--ux-accent-rgb), 0.12) !important;
+  border-radius: var(--ux-radius-xl) !important;
+}
+
+html body #toast-container { gap: 10px !important; }
+html body #toast-container > div {
+  border-radius: var(--ux-radius) !important;
+  background: var(--ux-surface-strong) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--ux-shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  animation: ux-toast-in 320ms var(--ux-ease) both !important;
+  transition: opacity 200ms ease, transform 200ms ease !important;
+}
+html body #toast-container > div.ux-toast-leaving { opacity: 0 !important; transform: translateX(24px) !important; }
+
+/* --------------------------------------------------------------------------
+   11. TERMINAL / CHARTS
+   -------------------------------------------------------------------------- */
+html body .nook-terminal-box { overflow: hidden !important; }
+html body .nook-terminal-prompt-bar {
+  background: rgba(10, 15, 25, 0.7) !important;
+  border-top: 1px solid var(--ux-line) !important;
+}
+html body .nook-terminal-input { font-family: var(--ux-font-mono) !important; }
+html body #terminal-container { background: #06090f !important; }
+html body .xterm { padding: 12px 14px; }
+html body .xterm-viewport { scrollbar-width: thin; }
+
+/* --------------------------------------------------------------------------
+   12. UX ENGINE COMPONENTS  (created by /js/ux.js)
+   -------------------------------------------------------------------------- */
+.ux-overlay {
+  position: fixed; inset: 0; z-index: 100000;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: clamp(16px, 10vh, 120px) 16px 16px;
+  background: rgba(3, 6, 12, 0.66);
+  backdrop-filter: blur(9px) saturate(0.9);
+  -webkit-backdrop-filter: blur(9px) saturate(0.9);
+  animation: ux-fade-in 180ms ease both;
+  font-family: var(--ux-font-sans);
+}
+
+.ux-palette {
+  width: min(620px, 100%);
+  max-height: min(640px, 78vh);
+  display: flex; flex-direction: column;
+  background: linear-gradient(165deg, rgba(21, 28, 43, 0.98), rgba(10, 15, 25, 0.99));
+  border: 1px solid var(--ux-line-strong);
+  border-radius: var(--ux-radius-xl);
+  box-shadow: var(--ux-shadow-lg), 0 0 0 1px rgba(var(--ux-accent-rgb), 0.14);
+  overflow: hidden;
+  animation: ux-pop 240ms var(--ux-ease) both;
+  color: var(--ux-text);
+}
+.ux-palette-search { display: flex; align-items: center; gap: 12px; padding: 15px 18px; border-bottom: 1px solid var(--ux-line); }
+.ux-palette-search-icon { color: var(--ux-accent); display: flex; flex-shrink: 0; }
+.ux-palette-search-icon svg { width: 18px; height: 18px; }
+.ux-palette-input {
+  flex: 1; min-width: 0;
+  background: transparent !important; border: none !important; box-shadow: none !important;
+  color: var(--ux-text-strong) !important; font-size: 15px !important; padding: 4px 0 !important;
+  outline: none !important; font-family: var(--ux-font-sans) !important;
+}
+.ux-palette-input::placeholder { color: var(--ux-text-faint) !important; }
+.ux-palette kbd, .ux-help kbd, .ux-search-trigger kbd {
+  font-family: var(--ux-font-mono); font-size: 10px; line-height: 1;
+  padding: 5px 7px; border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--ux-line-strong);
+  color: var(--ux-text-muted); white-space: nowrap;
+}
+.ux-palette-results { overflow-y: auto; padding: 10px; flex: 1; min-height: 80px; }
+.ux-palette-group-label {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ux-text-faint); padding: 12px 10px 7px;
+}
+.ux-palette-item {
+  width: 100%; display: flex; align-items: center; gap: 12px;
+  padding: 10px 11px; border-radius: var(--ux-radius-sm);
+  border: 1px solid transparent; background: transparent; color: var(--ux-text);
+  text-align: left; transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+.ux-palette-item:hover, .ux-palette-item.is-active {
+  background: rgba(var(--ux-accent-rgb), 0.12);
+  border-color: rgba(var(--ux-accent-rgb), 0.22);
+}
+.ux-palette-item.is-active { transform: translateX(2px); }
+.ux-palette-item-icon {
+  width: 32px; height: 32px; flex-shrink: 0; border-radius: 9px;
+  display: grid; place-items: center;
+  background: rgba(var(--ux-accent-rgb), 0.1);
+  border: 1px solid rgba(var(--ux-accent-rgb), 0.16);
+  color: var(--ux-accent);
+}
+.ux-palette-item-icon svg { width: 16px; height: 16px; }
+.ux-palette-item-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ux-palette-item-text strong { font-size: 12.5px; font-weight: 700; color: var(--ux-text-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ux-palette-item-text small { font-size: 10.5px; color: var(--ux-text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ux-palette-item-hint { font-size: 10px; color: var(--ux-text-faint); font-family: var(--ux-font-mono); }
+.ux-palette-empty { padding: 34px 16px; text-align: center; color: var(--ux-text-faint); font-size: 12.5px; }
+.ux-palette-footer {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 10px 16px; border-top: 1px solid var(--ux-line);
+  font-size: 10.5px; color: var(--ux-text-faint);
+  background: rgba(255, 255, 255, 0.015);
+}
+.ux-palette-footer span { display: inline-flex; align-items: center; gap: 6px; }
+.ux-palette-footer kbd { padding: 3px 5px; font-size: 9px; }
+
+/* Header search trigger */
+.ux-search-trigger {
+  display: none; align-items: center; gap: 10px;
+  height: 36px; width: clamp(160px, 20vw, 260px);
+  padding: 0 9px 0 12px; border-radius: var(--ux-radius-sm);
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid var(--ux-line) !important;
+  color: var(--ux-text-faint) !important;
+  font-size: 11.5px; text-align: left;
+  transition: all var(--ux-speed) var(--ux-ease) !important;
+}
+.ux-search-trigger:hover {
+  background: rgba(var(--ux-accent-rgb), 0.09) !important;
+  border-color: rgba(var(--ux-accent-rgb), 0.28) !important;
+  color: var(--ux-text) !important;
+}
+.ux-search-trigger > span { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ux-search-trigger svg { width: 15px; height: 15px; flex-shrink: 0; }
+html body #main-header .ux-search-trigger { width: clamp(160px, 20vw, 260px) !important; }
+@media (min-width: 900px) { html body .ux-search-trigger { display: flex !important; } }
+
+/* Connection status pill */
+.ux-status-pill {
+  display: none; align-items: center; gap: 7px;
+  height: 30px; padding: 0 11px; border-radius: 999px;
+  background: rgba(52, 211, 153, 0.07);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  color: #6ee7b7; font-size: 10px; font-weight: 700; letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.ux-status-pill .ux-dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.15); }
+.ux-status-pill.is-offline { background: rgba(251, 113, 133, 0.08); border-color: rgba(251, 113, 133, 0.24); color: #fda4af; }
+.ux-status-pill.is-offline .ux-dot { background: #fb7185; box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.16); }
+@media (min-width: 1180px) { .ux-status-pill { display: inline-flex; } }
+
+/* Appearance popover */
+.ux-appearance {
+  position: fixed; z-index: 90000; top: calc(var(--ux-header-h) + 8px); right: 16px;
+  width: min(320px, calc(100vw - 24px));
+  padding: 16px; border-radius: var(--ux-radius-lg);
+  background: var(--ux-surface-strong);
+  border: 1px solid var(--ux-line-strong);
+  box-shadow: var(--ux-shadow-lg);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  color: var(--ux-text); font-family: var(--ux-font-sans);
+  animation: ux-pop 200ms var(--ux-ease) both;
+}
+.ux-appearance-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.ux-appearance-head h4 { margin: 0; font-size: 13px; font-weight: 800; color: var(--ux-text-strong); }
+.ux-appearance-head button { width: 26px; height: 26px; border-radius: 8px; border: 1px solid var(--ux-line); background: rgba(255,255,255,.04); color: var(--ux-text-muted); display: grid; place-items: center; }
+.ux-appearance-head button:hover { color: #fff; background: rgba(255,255,255,.1); }
+.ux-appearance-head svg { width: 14px; height: 14px; }
+.ux-field-label { display: block; font-size: 9.5px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ux-text-faint); margin: 14px 0 8px; }
+.ux-segmented { display: flex; gap: 4px; padding: 4px; border-radius: var(--ux-radius-sm); background: rgba(255,255,255,.035); border: 1px solid var(--ux-line-soft); }
+.ux-segmented button {
+  flex: 1; padding: 7px 4px; border: none; border-radius: 8px; background: transparent;
+  color: var(--ux-text-muted); font-size: 10.5px; font-weight: 700; transition: all 160ms ease;
+}
+.ux-segmented button:hover { color: #fff; }
+.ux-segmented button.is-active { background: rgba(var(--ux-accent-rgb), 0.18); color: var(--ux-accent); box-shadow: inset 0 0 0 1px rgba(var(--ux-accent-rgb), 0.28); }
+.ux-swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+.ux-swatch { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; background: var(--swatch); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); transition: transform 160ms ease, box-shadow 160ms ease; }
+.ux-swatch:hover { transform: scale(1.12); }
+.ux-swatch.is-active { border-color: #fff; box-shadow: 0 0 0 3px rgba(var(--ux-accent-rgb), .2); }
+.ux-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid var(--ux-line-soft); font-size: 11.5px; color: var(--ux-text); }
+.ux-toggle-row small { display: block; color: var(--ux-text-faint); font-size: 10px; margin-top: 2px; }
+.ux-switch { position: relative; width: 36px; height: 20px; flex-shrink: 0; appearance: none; background: rgba(148,163,184,.2); border-radius: 999px; cursor: pointer; transition: background 180ms ease; }
+.ux-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform 180ms var(--ux-ease); }
+.ux-switch:checked { background: var(--ux-accent); }
+.ux-switch:checked::after { transform: translateX(16px); }
+.ux-range { width: 100%; height: 5px; border-radius: 999px; background: rgba(148,163,184,.2); appearance: none; cursor: pointer; }
+.ux-range::-webkit-slider-thumb { appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--ux-accent); box-shadow: 0 0 0 3px rgba(var(--ux-accent-rgb), .2); }
+.ux-reset { width: 100%; margin-top: 14px; padding: 9px; border-radius: var(--ux-radius-sm); border: 1px solid var(--ux-line); background: rgba(255,255,255,.04); color: var(--ux-text-muted); font-size: 11px; font-weight: 700; }
+.ux-reset:hover { color: #fff; border-color: rgba(var(--ux-accent-rgb), .4); }
+
+/* Shortcuts help */
+.ux-help { width: min(560px, 100%); max-height: 80vh; overflow-y: auto; padding: 22px; border-radius: var(--ux-radius-xl); background: var(--ux-surface-strong); border: 1px solid var(--ux-line-strong); box-shadow: var(--ux-shadow-lg); color: var(--ux-text); font-family: var(--ux-font-sans); animation: ux-pop 240ms var(--ux-ease) both; }
+.ux-help h3 { margin: 0 0 4px; font-size: 17px; font-weight: 800; color: #fff; }
+.ux-help > p { margin: 0 0 18px; font-size: 11.5px; color: var(--ux-text-faint); }
+.ux-help-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 22px; }
+.ux-help-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--ux-line-soft); font-size: 11.5px; }
+.ux-help-row span { color: var(--ux-text-muted); }
+.ux-help-row div { display: flex; gap: 4px; }
+
+/* Top loading progress */
+.ux-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 100001; pointer-events: none; opacity: 0; transition: opacity 200ms ease; }
+.ux-progress.is-visible { opacity: 1; }
+.ux-progress > span { display: block; height: 100%; width: 0%; border-radius: 0 2px 2px 0; background: linear-gradient(90deg, var(--ux-accent), var(--ux-accent-2)); box-shadow: 0 0 12px rgba(var(--ux-accent-rgb), .8); transition: width 220ms var(--ux-ease); }
+
+/* Scroll-to-top FAB */
+.ux-fab {
+  position: fixed; right: 20px; bottom: 22px; z-index: 8000;
+  width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--ux-surface-strong); color: var(--ux-accent);
+  border: 1px solid rgba(var(--ux-accent-rgb), .3);
+  box-shadow: var(--ux-shadow);
+  opacity: 0; transform: translateY(12px) scale(.9); pointer-events: none;
+  transition: all var(--ux-speed) var(--ux-ease);
+}
+.ux-fab.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.ux-fab:hover { box-shadow: var(--ux-shadow-glow); transform: translateY(-2px); }
+.ux-fab svg { width: 17px; height: 17px; }
+
+/* Skip link + a11y helpers */
+.ux-skip-link { position: fixed; top: -60px; left: 14px; z-index: 100002; padding: 10px 16px; border-radius: 10px; background: var(--ux-accent); color: var(--ux-accent-ink); font-weight: 800; font-size: 12px; transition: top 180ms ease; }
+.ux-skip-link:focus { top: 12px; }
+.ux-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* Skeleton shimmer (usable by any view) */
+.ux-skeleton { position: relative; overflow: hidden; background: rgba(148,163,184,.09); border-radius: var(--ux-radius-sm); }
+.ux-skeleton::after { content: ''; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.07), transparent); animation: ux-shimmer 1.4s infinite; }
+
+/* --------------------------------------------------------------------------
+   13. ANIMATIONS
+   -------------------------------------------------------------------------- */
+@keyframes ux-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ux-pop { from { opacity: 0; transform: translateY(-10px) scale(.975); } to { opacity: 1; transform: none; } }
+@keyframes ux-view-in { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: none; } }
+@keyframes ux-toast-in { from { opacity: 0; transform: translateX(28px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes ux-shimmer { 100% { transform: translateX(100%); } }
+
+/* --------------------------------------------------------------------------
+   14. OPTION MODES
+   -------------------------------------------------------------------------- */
+/* Compact density */
+html[data-ux-density="compact"] { --ux-header-h: 56px; --ux-sidebar-w: 226px; --card-blur: 10px; }
+html[data-ux-density="compact"] body #main-content { padding: 14px 18px !important; }
+html[data-ux-density="compact"] body .nook-nav-item { padding: 6px 9px !important; min-height: 34px; }
+html[data-ux-density="compact"] body .nook-icon-box { width: 26px !important; height: 26px !important; }
+html[data-ux-density="compact"] body .glass-card,
+html[data-ux-density="compact"] body .glass-panel { border-radius: var(--ux-radius) !important; }
+
+/* Reduced motion (also honours the OS setting below) */
+html[data-ux-motion="reduced"] *,
+html[data-ux-motion="reduced"] *::before,
+html[data-ux-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Focus mode — hides the wallpaper for a distraction-free workspace */
+html[data-ux-focus="on"] #wallpaper-layer,
+html[data-ux-focus="on"] #wallpaper-video { opacity: 0 !important; }
+
+/* --------------------------------------------------------------------------
+   15. LIGHT MODE ("DAYLIGHT")
+   Best-effort inversion of the legacy dark markup. Buttons, gradient
+   surfaces and status colours keep their own contrast.
+   -------------------------------------------------------------------------- */
+html.light {
+  --ux-surface: rgba(255, 255, 255, 0.82);
+  --ux-surface-strong: rgba(255, 255, 255, 0.97);
+  --ux-surface-soft: rgba(241, 245, 249, 0.8);
+  --ux-surface-hover: rgba(226, 232, 240, 0.9);
+  --ux-line: rgba(15, 23, 42, 0.1);
+  --ux-line-strong: rgba(15, 23, 42, 0.16);
+  --ux-line-soft: rgba(15, 23, 42, 0.06);
+  --ux-text: #1e293b;
+  --ux-text-strong: #0b1220;
+  --ux-text-muted: #3f4c60;
+  --ux-text-faint: #5b687c;
+  --ux-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --ux-shadow: 0 14px 34px -18px rgba(15, 23, 42, 0.28), 0 2px 8px rgba(15, 23, 42, 0.05);
+  --ux-shadow-lg: 0 32px 70px -24px rgba(15, 23, 42, 0.4), 0 8px 24px rgba(15, 23, 42, 0.1);
+  --ux-wallpaper-opacity: 0.08;
+  color-scheme: light;
+}
+html.light body {
+  background-color: #f4f7fb !important;
+  background-image:
+    radial-gradient(1100px 620px at 8% -8%, rgba(var(--ux-accent-rgb), 0.16), transparent 62%),
+    radial-gradient(900px 620px at 100% 0%, rgba(var(--ux-accent-2-rgb), 0.12), transparent 58%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f9 100%) !important;
+  color: var(--ux-text) !important;
+}
+html.light #overlay-layer { background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(241,245,249,.5)) !important; }
+html.light #main-header.nook-topbar {
+  background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(248,250,252,.86)) !important;
+  border-bottom-color: var(--ux-line-strong) !important;
+}
+html.light #header-panel-name { background: linear-gradient(100deg, #0f172a 20%, rgba(var(--ux-accent-rgb), 1) 160%); -webkit-background-clip: text; background-clip: text; }
+html.light #header-sub-name { color: #64748b !important; }
+html.light #main-sidebar.nook-sidebar {
+  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(248,250,252,.84)) !important;
+  border-right-color: var(--ux-line-strong) !important;
+}
+html.light .glass-panel,
+html.light .glass-card,
+html.light .nook-stat-card,
+html.light .nook-stat-card-mini,
+html.light .nook-chart-card,
+html.light .nook-parsent-card {
+  background: linear-gradient(160deg, rgba(255,255,255,.95), rgba(244,248,253,.92)) !important;
+  border-color: var(--ux-line-strong) !important;
+  box-shadow: var(--ux-shadow), inset 0 1px 0 rgba(255,255,255,.8) !important;
+}
+html.light .nook-nav-item { color: #475569 !important; }
+html.light .nook-nav-item:hover { color: #0f172a !important; background: rgba(15,23,42,.04) !important; }
+html.light .nook-nav-item.active { color: #0b1220 !important; }
+html.light .nook-icon-box { background: rgba(15,23,42,.035) !important; color: #64748b !important; }
+html.light input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([class*="xterm"]):not([class*="ace_"]),
+html.light select:not([class*="xterm"]):not([class*="ace_"]),
+html.light textarea:not([class*="xterm"]):not([class*="ace_"]) {
+  background-color: rgba(255,255,255,.9) !important;
+  border-color: var(--ux-line-strong) !important;
+  color: #0f172a !important;
+  box-shadow: inset 0 1px 2px rgba(15,23,42,.04) !important;
+}
+html.light input::placeholder, html.light textarea::placeholder { color: #94a3b8 !important; }
+html.light select option { background: #fff; color: #0f172a; }
+html.light thead th { color: #64748b !important; background: rgba(15,23,42,.025) !important; }
+
+/* Neutral Tailwind text utilities become dark text in light mode ... */
+html.light :where(
+  .text-white, .text-slate-50, .text-slate-100, .text-slate-200, .text-slate-300,
+  .text-slate-400, .text-slate-500, .text-gray-100, .text-gray-200, .text-gray-300,
+  .text-gray-400, .text-zinc-100, .text-zinc-200, .text-zinc-300, .text-zinc-400
+):not(button):not(a):not([class*="from-"]):not([class*="bg-gradient"]):not([class*="bg-slate-900"]):not([class*="bg-[#"]) {
+  color: #1e293b !important;
+}
+html.light .text-slate-400:not(button):not([class*="from-"]),
+html.light .text-slate-500:not(button):not([class*="from-"]) { color: #64748b !important; }
+/* ...but accent surfaces keep their white text. */
+html.light :is(button, .btn-nook-start, .btn-nook-stop, .btn-nook-restart, .btn-cyber,
+  [class*="from-"], [class*="bg-gradient"], [class*="bg-slate-900"], [class*="bg-[#"]) {
+  color: #fff !important;
+}
+html.light :is(button, [class*="from-"], [class*="bg-gradient"]) :where(.text-white, .text-slate-100, .text-slate-200) { color: inherit !important; }
+html.light .nook-terminal-box,
+html.light #terminal-container { background: #0b1120 !important; }
+html.light .nook-terminal-box { color: #e2e8f0 !important; }
+html.light #mpanel-global-footer-watermark > div { color: #64748b !important; }
+
+/* --------------------------------------------------------------------------
+   16. RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  :root { --ux-sidebar-w: 232px; }
+  html body #main-content { padding: 18px !important; }
+}
+@media (max-width: 767px) {
+  :root { --ux-header-h: 58px; }
+  html body #main-header.nook-topbar { padding: 0 12px !important; }
+  html body #main-content { padding: 14px 12px !important; }
+  html body .ux-fab { right: 14px; bottom: 16px; }
+  html body #main-sidebar.nook-sidebar { box-shadow: var(--ux-shadow-lg) !important; }
+  html body #header-panel-name { font-size: 14px !important; }
+  html body #header-sub-name { display: none; }
+}
+@media (max-width: 420px) {
+  html body #main-header #header-device-mode-container { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-ux-motion="full"]) *,
+  html:not([data-ux-motion="full"]) *::before,
+  html:not([data-ux-motion="full"]) *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -57,19 +57,49 @@ async function bootstrap() {
   const app = express();
   const server = http.createServer(app);
 
+  app.disable('x-powered-by');
   app.use(cors());
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-  // Static Assets
+  // Baseline security headers. X-Frame-Options is intentionally omitted so the
+  // panel can be embedded behind a reverse proxy / preview iframe if wanted.
+  app.use((req, res, next) => {
+    res.set({
+      'X-Content-Type-Options': 'nosniff',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+      'X-DNS-Prefetch-Control': 'on'
+    });
+    next();
+  });
+
+  // Static Assets: HTML/JS/CSS stay uncached so panel updates apply instantly,
+  // while heavy images and fonts can be cached by the browser for a day.
   app.use(express.static(path.join(__dirname, '../public'), {
     maxAge: 0,
     etag: false,
-    setHeaders: (res) => {
-      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    setHeaders: (res, filePath) => {
+      if (/\.(png|jpe?g|gif|svg|webp|avif|ico|woff2?|ttf|mp3)$/i.test(filePath)) {
+        res.set('Cache-Control', 'public, max-age=86400');
+      } else {
+        res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      }
     }
   }));
   app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
+
+  // Lightweight health probe for uptime monitors and reverse proxies.
+  app.get('/api/health', (req, res) => {
+    res.json({
+      success: true,
+      status: 'ok',
+      service: 'tg-panel-web',
+      version: require('../package.json').version,
+      uptime: Math.round(process.uptime()),
+      timestamp: new Date().toISOString()
+    });
+  });
 
   // REST API Routes
   app.use('/api/auth', authRoutes);
@@ -107,11 +137,30 @@ async function bootstrap() {
   app.use('/api/public', developerProfileRoutes);
   app.use('/api/developer', developerProfileRoutes);
 
+  // Unknown API routes must answer with JSON instead of hanging forever.
+  app.use('/api', (req, res) => {
+    res.status(404).json({ success: false, error: 'API endpoint not found', path: req.path });
+  });
+
   // Fallback to index.html for SPA routing
   app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api') && !req.path.startsWith('/ws')) {
-      res.sendFile(path.join(__dirname, '../public/index.html'));
+    if (req.path.startsWith('/api') || req.path.startsWith('/ws')) {
+      return res.status(404).json({ success: false, error: 'Not found' });
     }
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+  });
+
+  // Consistent JSON errors for API callers, plain text for the browser.
+  app.use((err, req, res, next) => {
+    console.error('[Web] Unhandled request error:', err);
+    if (res.headersSent) return next(err);
+    if (req.path.startsWith('/api')) {
+      const detail = process.env.NODE_ENV === 'production'
+        ? 'Internal server error'
+        : (err.message || 'Internal server error');
+      return res.status(err.status || 500).json({ success: false, error: detail });
+    }
+    res.status(err.status || 500).send('Internal server error');
   });
 
   // WebSocket Server for Console & Live Metrics

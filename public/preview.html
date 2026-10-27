@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#05070d">
+  <title>TG-PANEL · Aurora Pro UI Preview</title>
+  <link rel="icon" href="/assets/favicon.svg">
+
+  <!-- The same stylesheets the real panel uses (no CDN required for this page) -->
+  <link rel="stylesheet" href="/css/style.css?v=3.5.5">
+  <link id="ux-premium-css" rel="stylesheet" href="/css/premium.css?v=4.0.0">
+
+  <style>
+    /* Minimal layout helpers — stand in for the Tailwind utilities that the
+       real panel loads from its CDN. Everything visual comes from premium.css. */
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .pv-row { display: flex; align-items: center; gap: 10px; }
+    .pv-between { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .pv-wrap { flex-wrap: wrap; }
+    .pv-grow { flex: 1; min-width: 0; }
+    .pv-col { display: flex; flex-direction: column; gap: 6px; }
+    .pv-stack { display: flex; flex-direction: column; gap: 18px; }
+    .pv-stack > * { flex-shrink: 0; }
+    .pv-grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .pv-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .pv-grid-2 { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 16px; }
+    .pv-ico { display: inline-flex; align-items: center; justify-content: center; }
+    .pv-ico svg { width: 18px; height: 18px; }
+    .pv-ico.pv-sm svg { width: 14px; height: 14px; }
+    .pv-ico.pv-lg svg { width: 24px; height: 24px; }
+    .pv-title { margin: 0; font-size: 20px; font-weight: 800; color: #fff; }
+    .pv-sub { margin: 0; font-size: 11.5px; color: #94a3b8; line-height: 1.55; }
+    .pv-label { font-size: 9.5px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: #64748b; }
+    .pv-value { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 22px; font-weight: 700; color: #f8fafc; margin: 2px 0; }
+    .pv-muted { color: #94a3b8 !important; }
+    .pv-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+    .pv-section-title { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 800; color: #e2e8f0; margin: 0 0 12px; }
+    .pv-section-title .pv-ico { color: var(--ux-accent); }
+    .pv-section-title .pv-ico svg { width: 16px; height: 16px; }
+
+    /* Shell */
+    #main-header.nook-topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; }
+    #header-actions { display: flex; align-items: center; gap: 8px; }
+    #main-sidebar.nook-sidebar { display: flex; flex-direction: column; justify-content: space-between; }
+    #sidebar-scroll-container { flex: 1; min-height: 0; overflow-y: auto; }
+    #sidebar-scroll-container > nav { display: flex; flex-direction: column; gap: 3px; margin-bottom: 20px; }
+    #sidebar-scroll-container > .pv-label { display: block; padding: 4px 10px 8px; }
+    #main-content { display: block; }
+    #view-container { min-height: 0; }
+    .pv-logo {
+      width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center;
+      background: linear-gradient(140deg, rgba(34,211,238,.22), rgba(139,92,246,.2));
+      border: 1px solid rgba(34,211,238,.32); color: #67e8f9;
+      box-shadow: 0 8px 22px -8px rgba(34,211,238,.7);
+    }
+    .pv-logo svg { width: 21px; height: 21px; }
+    .pv-brand h1 { margin: 0; font-size: 16px; font-weight: 800; letter-spacing: -.03em;
+      background: linear-gradient(100deg, #fff 20%, var(--ux-accent) 140%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .pv-brand p { margin: 2px 0 0; font-size: 9px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: #64748b; }
+    .pv-avatar { width: 26px; height: 26px; border-radius: 9px; display: grid; place-items: center; font-size: 11px; font-weight: 800;
+      background: linear-gradient(135deg, var(--ux-accent), var(--ux-accent-2)); color: var(--ux-accent-ink); }
+    .pv-userchip { display: flex; align-items: center; gap: 8px; padding: 4px 9px 4px 4px; border-radius: 12px;
+      background: var(--ux-surface); border: 1px solid var(--ux-line); font-size: 11px; font-weight: 700; color: #cbd5e1; }
+    .pv-header-btn { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center;
+      background: transparent; border: 1px solid transparent; color: #94a3b8; }
+    .pv-header-btn:hover { color: var(--ux-accent); background: rgba(34,211,238,.1); border-color: rgba(34,211,238,.22); }
+
+    /* Cards */
+    .glass-panel, .glass-card { padding: 18px; }
+    body .glass-panel.pv-hero {
+      position: relative; overflow: hidden; padding: 26px 28px;
+      background:
+        radial-gradient(620px 260px at 88% -30%, rgba(var(--ux-accent-2-rgb), .3), transparent 70%),
+        radial-gradient(520px 240px at 8% 130%, rgba(var(--ux-accent-rgb), .22), transparent 70%),
+        linear-gradient(120deg, rgba(20,27,42,.92), rgba(11,16,27,.94)) !important;
+    }
+    .pv-hero::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 34px 34px; mask-image: linear-gradient(90deg, transparent, #000);
+    }
+    .pv-hero > * { position: relative; z-index: 1; }
+    .pv-eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 9.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--ux-accent); background: rgba(var(--ux-accent-rgb), .1); border: 1px solid rgba(var(--ux-accent-rgb), .25);
+      padding: 6px 11px; border-radius: 999px; }
+    .pv-hero h2 { margin: 14px 0 6px; font-size: clamp(21px, 3vw, 28px); font-weight: 800; color: #fff; letter-spacing: -.035em; }
+    .pv-hero p { margin: 0; font-size: 12px; color: #a9b6c8; max-width: 560px; line-height: 1.6; }
+    .pv-hero-actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+    .pv-tile { width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; flex-shrink: 0; }
+    .pv-tile svg { width: 20px; height: 20px; }
+    .pv-tile.cyan { background: rgba(34,211,238,.12); border: 1px solid rgba(34,211,238,.24); color: #67e8f9; }
+    .pv-tile.violet { background: rgba(167,139,250,.12); border: 1px solid rgba(167,139,250,.24); color: #c4b5fd; }
+    .pv-tile.emerald { background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.24); color: #6ee7b7; }
+    .pv-tile.amber { background: rgba(251,191,36,.12); border: 1px solid rgba(251,191,36,.24); color: #fcd34d; }
+
+    .pv-status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border-radius: 999px; font-size: 9.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    .pv-status.online { background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.24); color: #6ee7b7; }
+    .pv-status.offline { background: rgba(148,163,184,.08); border: 1px solid rgba(148,163,184,.18); color: #94a3b8; }
+    .pv-status.starting { background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.24); color: #fcd34d; }
+    .pv-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px rgba(255,255,255,.05); }
+    .pv-server { display: flex; flex-direction: column; gap: 12px; }
+    .pv-meter { height: 6px; border-radius: 999px; background: rgba(148,163,184,.12); overflow: hidden; }
+    .pv-meter > i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--ux-accent), var(--ux-accent-2)); }
+    .pv-kv { display: flex; align-items: center; justify-content: space-between; font-size: 10.5px; color: #94a3b8; }
+    .pv-kv strong { color: #e2e8f0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10.5px; }
+    .pv-chart { width: 100%; height: 148px; display: block; }
+    .pv-term { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 1.85; color: #cbd5e1; padding: 16px 18px; background: #06090f; border-radius: 0 0 18px 18px; }
+    .pv-term .ok { color: #6ee7b7; } .pv-term .info { color: #67e8f9; } .pv-term .warn { color: #fcd34d; } .pv-term .dim { color: #64748b; }
+    .pv-term-bar { display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-top: 1px solid rgba(148,163,184,.12); background: rgba(10,15,25,.7); }
+    .pv-term-bar input { flex: 1; background: transparent !important; border: none !important; box-shadow: none !important; color: #e2e8f0 !important; font-family: inherit; font-size: 11px; padding: 2px !important; }
+    .pv-pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pv-chip { padding: 6px 11px; border-radius: 999px; font-size: 10px; font-weight: 700; border: 1px solid var(--ux-line); background: rgba(255,255,255,.03); color: #cbd5e1; }
+    .pv-activity { display: flex; flex-direction: column; }
+    .pv-activity-item { display: flex; align-items: center; gap: 12px; padding: 11px 2px; border-bottom: 1px solid rgba(148,163,184,.08); }
+    .pv-activity-item:last-child { border-bottom: none; }
+    .pv-activity-item .pv-ico { width: 28px; height: 28px; border-radius: 9px; background: rgba(255,255,255,.04); color: var(--ux-accent); flex-shrink: 0; }
+    .pv-activity-item .pv-ico svg { width: 14px; height: 14px; }
+    .pv-activity-item strong { display: block; font-size: 11.5px; color: #e2e8f0; font-weight: 700; }
+    .pv-activity-item small { display: block; font-size: 10px; color: #64748b; margin-top: 2px; }
+    .pv-activity-item time { margin-left: auto; font-size: 9.5px; color: #64748b; white-space: nowrap; font-family: 'JetBrains Mono', monospace; }
+    .pv-footer { text-align: center; font-size: 10px; color: #64748b; padding: 14px 0 6px; border-top: 1px solid rgba(148,163,184,.08); }
+    .pv-note { font-size: 10.5px; color: #94a3b8; }
+    .pv-kbd { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 7px; background: rgba(255,255,255,.05); border: 1px solid var(--ux-line-strong); font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #cbd5e1; }
+    .pv-sidebar-card { padding: 12px; border-radius: 14px; border: 1px solid var(--ux-line); background: rgba(255,255,255,.025); }
+    .pv-sidebar-card .pv-row { gap: 9px; }
+    .pv-sidebar-card strong { font-size: 11px; color: #e2e8f0; }
+    .pv-sidebar-card small { font-size: 9.5px; color: #64748b; }
+
+    @media (max-width: 1100px) {
+      .pv-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .pv-grid-2 { grid-template-columns: 1fr; }
+      .pv-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    /* ---------- Daylight (light mode) refinements ---------- */
+    html.light .pv-value,
+    html.light .pv-title,
+    html.light .pv-section-title,
+    html.light .pv-activity-item strong,
+    html.light .pv-kv strong,
+    html.light .pv-sidebar-card strong,
+    html.light .pv-userchip,
+    html.light .pv-chip,
+    html.light .pv-kbd { color: #0f172a; }
+    html.light .pv-label,
+    html.light .pv-sub,
+    html.light .pv-note,
+    html.light .pv-kv,
+    html.light .pv-activity-item small,
+    html.light .pv-activity-item time,
+    html.light .pv-sidebar-card small,
+    html.light .pv-brand p,
+    html.light .pv-footer { color: #5b687c; }
+    html.light .pv-muted { color: #5b687c !important; }
+    html.light .pv-note { color: #5b687c !important; }
+    html.light .pv-chip,
+    html.light .pv-kbd,
+    html.light .ux-search-trigger { background: #f1f5f9; border-color: rgba(15,23,42,.14); }
+    html.light .ux-search-trigger { color: #5b687c !important; }
+    html.light .pv-brand h1 {
+      background: linear-gradient(100deg, #0f172a 20%, var(--ux-accent) 160%);
+      -webkit-background-clip: text; background-clip: text;
+    }
+    html.light .pv-status.online { color: #047857; background: rgba(16,185,129,.1); border-color: rgba(16,185,129,.28); }
+    html.light .pv-status.starting { color: #b45309; background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.3); }
+    html.light .pv-status.offline { color: #475569; }
+    html.light [style*="color:#f1f5f9"],
+    html.light [style*="color:#e2e8f0"],
+    html.light [style*="color:#fff"] { color: #0f172a !important; }
+    html.light .pv-hero .glass-card {
+      background: rgba(11, 17, 28, .92) !important;
+      border-color: rgba(255,255,255,.12) !important;
+    }
+    html.light .pv-hero .glass-card .pv-label { color: #94a3b8; }
+    html.light .pv-hero .glass-card [style*="color:"] { color: #6ee7b7 !important; }
+    html.light .pv-term { color: #cbd5e1; }
+    html.light .pv-sidebar-card { background: #fff; }
+    html.light .pv-activity-item .pv-ico { background: rgba(15,23,42,.04); }
+    html.light .pv-logo { color: #0891b2; background: linear-gradient(140deg, rgba(34,211,238,.16), rgba(139,92,246,.12)); }
+
+    /* ---------- Mobile navigation ---------- */
+    .pv-menu-btn {
+      display: none; width: 34px; height: 34px; border-radius: 10px; place-items: center;
+      background: transparent; border: 1px solid transparent; color: #94a3b8;
+    }
+    .pv-menu-btn:hover { color: var(--ux-accent); background: rgba(34,211,238,.1); }
+    @media (max-width: 767px) {
+      .pv-grid-4, .pv-grid-3 { grid-template-columns: 1fr; }
+      body .glass-panel.pv-hero { padding: 20px; }
+      #main-content { padding: 14px !important; }
+      html body .pv-menu-btn { display: grid !important; }
+      html body .pv-brand p { display: none; }
+      html body #main-sidebar.nook-sidebar { display: none !important; }
+      html body.pv-sidebar-open #main-sidebar.nook-sidebar {
+        display: flex !important; position: fixed; top: var(--ux-header-h); bottom: 0; left: 0;
+        width: 264px !important; z-index: 62; box-shadow: var(--ux-shadow-lg);
+      }
+      html body.pv-sidebar-open::before {
+        content: ''; position: fixed; inset: var(--ux-header-h) 0 0 0;
+        background: rgba(2,6,16,.58); z-index: 61;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="wallpaper-layer"></div>
+  <div id="overlay-layer"></div>
+  <div id="toast-container" style="position:fixed;top:18px;right:18px;z-index:99999;display:flex;flex-direction:column;gap:10px;pointer-events:none"></div>
+
+  <!-- ============================ TOPBAR ============================ -->
+  <header id="main-header" class="nook-topbar">
+    <div class="pv-row" style="gap:12px;cursor:pointer" onclick="app.navigate('user-overview')">
+      <button class="pv-menu-btn" id="pv-menu-btn" type="button" aria-label="Toggle navigation" onclick="event.stopPropagation(); document.body.classList.toggle('pv-sidebar-open')"><span class="pv-ico" data-icon="menu"></span></button>
+      <span class="pv-logo"><span class="pv-ico" data-icon="zap"></span></span>
+      <span class="pv-brand">
+        <h1>TG-PANEL</h1>
+        <p>Server Control Engine</p>
+      </span>
+    </div>
+
+    <div id="header-actions">
+      <button class="pv-header-btn" id="header-theme-toggle-btn" title="Toggle Theme" aria-label="Toggle theme">
+        <span class="pv-ico pv-sm" data-icon="moon"></span>
+      </button>
+      <span class="pv-userchip"><span class="pv-avatar">A</span> Admin</span>
+    </div>
+  </header>
+
+  <div id="app-layout-body" style="display:flex;position:relative">
+    <!-- ============================ SIDEBAR ============================ -->
+    <aside id="main-sidebar" class="nook-sidebar">
+      <div id="sidebar-scroll-container">
+        <span class="pv-label">Client Portal</span>
+        <nav>
+          <a href="#user-overview" class="nook-nav-item active" id="nav-user-overview" data-lucide="layout"><span class="nook-icon-box"><span class="pv-ico" data-icon="layout"></span></span><span>Overview</span></a>
+          <a href="#user-servers" class="nook-nav-item" id="nav-user-servers" data-lucide="server"><span class="nook-icon-box"><span class="pv-ico" data-icon="server"></span></span><span>My Servers</span></a>
+          <a href="#user-marketplace" class="nook-nav-item" id="nav-user-marketplace" data-lucide="shopping-bag"><span class="nook-icon-box"><span class="pv-ico" data-icon="shopping-bag"></span></span><span>Marketplace</span></a>
+          <a href="#user-profile" class="nook-nav-item" id="nav-user-profile" data-lucide="user"><span class="nook-icon-box"><span class="pv-ico" data-icon="user"></span></span><span>Account</span></a>
+          <a href="#user-activity" class="nook-nav-item" id="nav-user-activity" data-lucide="activity"><span class="nook-icon-box"><span class="pv-ico" data-icon="activity"></span></span><span>Activity Log</span></a>
+        </nav>
+
+        <span class="pv-label">Administration</span>
+        <nav>
+          <a href="#admin-overview" class="nook-nav-item" id="nav-admin-overview" data-lucide="shield"><span class="nook-icon-box"><span class="pv-ico" data-icon="shield"></span></span><span>Overview</span></a>
+          <a href="#admin-servers" class="nook-nav-item" id="nav-admin-servers" data-lucide="hard-drive"><span class="nook-icon-box"><span class="pv-ico" data-icon="hard-drive"></span></span><span>Servers</span></a>
+          <a href="#admin-users" class="nook-nav-item" id="nav-admin-users" data-lucide="users"><span class="nook-icon-box"><span class="pv-ico" data-icon="users"></span></span><span>Users</span></a>
+          <a href="#admin-nodes" class="nook-nav-item" id="nav-admin-nodes" data-lucide="network"><span class="nook-icon-box"><span class="pv-ico" data-icon="network"></span></span><span>Nodes &amp; Ports</span></a>
+          <a href="#admin-settings" class="nook-nav-item" id="nav-admin-settings" data-lucide="sliders"><span class="nook-icon-box"><span class="pv-ico" data-icon="sliders"></span></span><span>Settings</span></a>
+          <a href="#admin-addons" class="nook-nav-item" id="nav-admin-addons" data-lucide="package"><span class="nook-icon-box"><span class="pv-ico" data-icon="package"></span></span><span>Addons</span></a>
+        </nav>
+      </div>
+      <div class="pv-sidebar-card">
+        <div class="pv-row">
+          <span class="pv-status online"><i class="pv-dot"></i> Live</span>
+          <span class="pv-grow" style="text-align:right"><small>v4.0 · Aurora Pro</small></span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ============================ MAIN ============================ -->
+    <main id="main-content">
+      <div id="view-container" class="pv-stack">
+
+        <!-- Preview notice -->
+        <div class="glass-panel" style="padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+          <div class="pv-row" style="gap:10px">
+            <span class="pv-tile violet" style="width:32px;height:32px;border-radius:10px"><span class="pv-ico pv-sm" data-icon="sparkles"></span></span>
+            <div>
+              <strong style="font-size:12px;color:#f1f5f9">Aurora Pro — interactive design preview</strong>
+              <div class="pv-note">This is the real design system applied to the panel's markup. No database required.</div>
+            </div>
+          </div>
+          <div class="pv-row pv-wrap" style="gap:8px">
+            <span class="pv-kbd">Ctrl</span><span class="pv-kbd">K</span>
+            <button class="btn-nook-start" style="font-size:11px;padding:8px 14px !important" onclick="TGUX.openPalette()">Open command palette</button>
+          </div>
+        </div>
+
+        <!-- Hero -->
+        <section class="glass-panel pv-hero">
+          <div class="pv-between pv-wrap">
+            <div class="pv-grow" style="min-width:260px">
+              <span class="pv-eyebrow"><span class="pv-ico pv-sm" data-icon="sparkles"></span> Control Center</span>
+              <h2>Good evening, Admin.</h2>
+              <p>Everything is running smoothly. You have 4 servers online, 2 updates available, and your nodes are reporting healthy latency.</p>
+              <div class="pv-hero-actions">
+                <button class="btn-nook-start" onclick="TGUX.toast('Deploy flow preview only','info')"><span class="pv-ico pv-sm" data-icon="zap"></span> Deploy a server</button>
+                <button class="btn-nook-restart" onclick="TGUX.openHelp()"><span class="pv-ico pv-sm" data-icon="keyboard"></span> Shortcuts</button>
+                <button class="btn-nook-restart" onclick="TGUX.openAppearance()"><span class="pv-ico pv-sm" data-icon="palette"></span> Appearance</button>
+              </div>
+            </div>
+            <div style="min-width:190px;display:flex;flex-direction:column;gap:10px">
+              <div class="glass-card" style="padding:14px;display:flex;align-items:center;gap:12px">
+                <span class="pv-tile emerald" style="width:36px;height:36px"><span class="pv-ico" data-icon="activity"></span></span>
+                <div><div class="pv-label">Fleet status</div><div style="font-size:15px;font-weight:800;color:#6ee7b7">All systems live</div></div>
+              </div>
+              <div class="glass-card" style="padding:14px;display:flex;align-items:center;gap:12px">
+                <span class="pv-tile cyan" style="width:36px;height:36px"><span class="pv-ico" data-icon="clock"></span></span>
+                <div><div class="pv-label">Uptime (30d)</div><div class="pv-mono" style="font-size:15px;font-weight:800;color:#e2e8f0">99.98%</div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Stat cards -->
+        <section class="pv-grid-4">
+          <div class="glass-card"><div class="pv-between"><div class="pv-col"><span class="pv-label">My servers</span><span class="pv-value">06</span><span class="pv-note">+1 this week</span></div><span class="pv-tile cyan"><span class="pv-ico" data-icon="server"></span></span></div></div>
+          <div class="glass-card"><div class="pv-between"><div class="pv-col"><span class="pv-label">Online</span><span class="pv-value" style="color:#6ee7b7">04</span><span class="pv-note">2 stopped</span></div><span class="pv-tile emerald"><span class="pv-ico" data-icon="activity"></span></span></div></div>
+          <div class="glass-card"><div class="pv-between"><div class="pv-col"><span class="pv-label">Memory</span><span class="pv-value" style="color:#c4b5fd">18 GB</span><span class="pv-note">of 32 GB</span></div><span class="pv-tile violet"><span class="pv-ico" data-icon="cpu"></span></span></div></div>
+          <div class="glass-card"><div class="pv-between"><div class="pv-col"><span class="pv-label">Disk used</span><span class="pv-value" style="color:#fcd34d">142 GB</span><span class="pv-note">of 500 GB</span></div><span class="pv-tile amber"><span class="pv-ico" data-icon="hard-drive"></span></span></div></div>
+        </section>
+
+        <!-- Chart + activity -->
+        <section class="pv-grid-2">
+          <div class="glass-card nook-chart-card" style="padding:18px">
+            <div class="pv-between" style="margin-bottom:8px">
+              <h3 class="pv-section-title" style="margin:0"><span class="pv-ico" data-icon="activity"></span> Resource usage</h3>
+              <span class="pv-chip">Last 24 hours</span>
+            </div>
+            <div class="pv-row" style="gap:18px;margin-bottom:6px">
+              <span class="pv-note"><i class="pv-dot" style="display:inline-block;background:var(--ux-accent)"></i> CPU</span>
+              <span class="pv-note"><i class="pv-dot" style="display:inline-block;background:var(--ux-accent-2)"></i> Memory</span>
+            </div>
+            <svg class="pv-chart" viewBox="0 0 600 150" preserveAspectRatio="none" aria-label="Resource usage chart">
+              <defs>
+                <linearGradient id="pvFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#22d3ee" stop-opacity=".35"/>
+                  <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="pvFill2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8b5cf6" stop-opacity=".22"/>
+                  <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <g stroke="rgba(148,163,184,.1)" stroke-width="1">
+                <line x1="0" y1="30" x2="600" y2="30"/><line x1="0" y1="70" x2="600" y2="70"/>
+                <line x1="0" y1="110" x2="600" y2="110"/><line x1="0" y1="149" x2="600" y2="149"/>
+              </g>
+              <path d="M0,112 C50,105 70,80 110,88 S170,58 210,72 S270,96 310,64 S370,44 410,58 S470,88 510,50 S560,38 600,44 L600,150 L0,150 Z" fill="url(#pvFill)"/>
+              <path d="M0,112 C50,105 70,80 110,88 S170,58 210,72 S270,96 310,64 S370,44 410,58 S470,88 510,50 S560,38 600,44" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M0,130 C60,124 90,112 130,118 S200,98 240,104 S300,86 350,96 S420,78 470,92 S540,74 600,82 L600,150 L0,150 Z" fill="url(#pvFill2)"/>
+              <path d="M0,130 C60,124 90,112 130,118 S200,98 240,104 S300,86 350,96 S420,78 470,92 S540,74 600,82" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="pv-between" style="margin-top:6px"><span class="pv-note">00:00</span><span class="pv-note">06:00</span><span class="pv-note">12:00</span><span class="pv-note">18:00</span><span class="pv-note">Now</span></div>
+          </div>
+
+          <div class="glass-card" style="padding:18px">
+            <h3 class="pv-section-title"><span class="pv-ico" data-icon="clock"></span> Recent activity</h3>
+            <div class="pv-activity">
+              <div class="pv-activity-item"><span class="pv-ico" data-icon="check"></span><div><strong>Survival SMP started</strong><small>Node eu-01 · paper 1.21.4</small></div><time>2m</time></div>
+              <div class="pv-activity-item"><span class="pv-ico" data-icon="archive"></span><div><strong>Backup completed</strong><small>backup-2026-10-27.zip · 1.8 GB</small></div><time>18m</time></div>
+              <div class="pv-activity-item"><span class="pv-ico" data-icon="package"></span><div><strong>Plugin installed</strong><small>LuckPerms v5.4.141</small></div><time>1h</time></div>
+              <div class="pv-activity-item"><span class="pv-ico" data-icon="users"></span><div><strong>Subuser added</strong><small>steve → Creative Hub</small></div><time>3h</time></div>
+              <div class="pv-activity-item"><span class="pv-ico" data-icon="refresh"></span><div><strong>Panel updated</strong><small>Aurora Pro v4.0.0</small></div><time>1d</time></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Server cards -->
+        <section>
+          <div class="pv-between" style="margin-bottom:12px">
+            <h3 class="pv-section-title" style="margin:0"><span class="pv-ico" data-icon="layers"></span> Your servers</h3>
+            <span class="pv-chip">6 instances</span>
+          </div>
+          <div class="pv-grid-3">
+            <div class="glass-card pv-server">
+              <div class="pv-between"><div class="pv-row"><span class="pv-tile cyan"><span class="pv-ico" data-icon="server"></span></span><div><strong style="font-size:12.5px;color:#f1f5f9">Survival SMP</strong><div class="pv-note">Paper 1.21.4 · eu-01</div></div></div><span class="pv-status online"><i class="pv-dot"></i> Online</span></div>
+              <div><div class="pv-kv"><span>CPU</span><strong>38%</strong></div><div class="pv-meter"><i style="width:38%"></i></div></div>
+              <div class="pv-between"><span class="pv-note pv-mono">play.tgpanel.in:25565</span><span class="pv-note">12 players</span></div>
+            </div>
+            <div class="glass-card pv-server">
+              <div class="pv-between"><div class="pv-row"><span class="pv-tile violet"><span class="pv-ico" data-icon="server"></span></span><div><strong style="font-size:12.5px;color:#f1f5f9">Creative Hub</strong><div class="pv-note">Purpur 1.21.1 · eu-01</div></div></div><span class="pv-status online"><i class="pv-dot"></i> Online</span></div>
+              <div><div class="pv-kv"><span>CPU</span><strong>14%</strong></div><div class="pv-meter"><i style="width:14%"></i></div></div>
+              <div class="pv-between"><span class="pv-note pv-mono">hub.tgpanel.in:25566</span><span class="pv-note">3 players</span></div>
+            </div>
+            <div class="glass-card pv-server">
+              <div class="pv-between"><div class="pv-row"><span class="pv-tile amber"><span class="pv-ico" data-icon="terminal"></span></span><div><strong style="font-size:12.5px;color:#f1f5f9">Discord Bot</strong><div class="pv-note">Node.js 22 · eu-02</div></div></div><span class="pv-status starting"><i class="pv-dot"></i> Starting</span></div>
+              <div><div class="pv-kv"><span>CPU</span><strong>62%</strong></div><div class="pv-meter"><i style="width:62%"></i></div></div>
+              <div class="pv-between"><span class="pv-note pv-mono">bot.tgpanel.in:3000</span><span class="pv-note">—</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Terminal + component lab -->
+        <section class="pv-grid-2">
+          <div class="glass-panel nook-terminal-box" style="padding:0">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(148,163,184,.1)">
+              <div class="pv-row" style="gap:8px"><span class="pv-ico pv-sm" style="color:var(--ux-accent)" data-icon="terminal"></span><strong style="font-size:11.5px;color:#e2e8f0">survival-smp · console</strong></div>
+              <span class="pv-status online"><i class="pv-dot"></i> Live</span>
+            </div>
+            <div class="pv-term">
+              <div class="dim">[10:42:01 INFO]: Starting minecraft server version 1.21.4</div>
+              <div class="info">[10:42:02 INFO]: Loading properties, 42 plugins</div>
+              <div class="dim">[10:42:04 INFO]: Preparing level "world"</div>
+              <div class="ok">[10:42:06 INFO]: Done (4.821s)! For help, type "help"</div>
+              <div class="warn">[10:43:11 WARN]: Can't keep up! Is the server overloaded?</div>
+              <div class="dim">[10:44:02 INFO]: Steve joined the game</div>
+            </div>
+            <div class="pv-term-bar"><span style="color:var(--ux-accent)">❯</span><input class="nook-terminal-input" placeholder="Type a command…" aria-label="Console command"></div>
+          </div>
+
+          <div class="glass-card" style="padding:18px">
+            <h3 class="pv-section-title"><span class="pv-ico" data-icon="sliders"></span> Component lab</h3>
+            <p class="pv-sub" style="margin-bottom:14px">Every control below uses the shared Aurora Pro tokens — accents, density and colour mode apply live.</p>
+            <div class="pv-pill-row" style="margin-bottom:14px">
+              <button class="btn-nook-start" style="font-size:11px;padding:8px 14px !important">Primary</button>
+              <button class="btn-nook-restart" style="font-size:11px;padding:8px 14px !important">Secondary</button>
+              <button class="btn-nook-stop" style="font-size:11px;padding:8px 14px !important">Danger</button>
+            </div>
+            <div class="pv-pill-row" style="margin-bottom:14px">
+              <span class="pv-status online"><i class="pv-dot"></i> Online</span>
+              <span class="pv-status starting"><i class="pv-dot"></i> Starting</span>
+              <span class="pv-status offline"><i class="pv-dot"></i> Offline</span>
+              <span class="pv-chip">v4.0.0</span>
+            </div>
+            <div class="pv-row" style="margin-bottom:14px"><input placeholder="Search servers…" style="flex:1" aria-label="Example search"><select aria-label="Example select"><option>All nodes</option><option>eu-01</option><option>eu-02</option></select></div>
+            <div class="pv-row" style="gap:8px;flex-wrap:wrap">
+              <button class="btn-nook-restart" style="font-size:10.5px;padding:7px 12px !important" onclick="TGUX.toast('Saved successfully','success')">Success toast</button>
+              <button class="btn-nook-restart" style="font-size:10.5px;padding:7px 12px !important" onclick="TGUX.toast('Something needs attention','warning')">Warning toast</button>
+              <button class="btn-nook-restart" style="font-size:10.5px;padding:7px 12px !important" onclick="fetch('/api/health').then(r=>r.json()).then(()=>TGUX.toast('Health check complete','info'))">API activity</button>
+            </div>
+            <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+              <div class="ux-skeleton" style="height:10px;width:82%"></div>
+              <div class="ux-skeleton" style="height:10px;width:60%"></div>
+              <div class="ux-skeleton" style="height:10px;width:70%"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="pv-footer">TG-PANEL · Aurora Pro design system v4.0.0 — static preview, no server connection required.</div>
+      </div>
+    </main>
+  </div>
+
+  <div id="modal-container"></div>
+
+  <script>
+    /* Lightweight stand-ins for the real controllers so the UX engine can be
+       exercised exactly as it is in the production panel. */
+    try { localStorage.setItem('tgpanel_ux_hint_v4', '1'); } catch (e) {} // no first-run toast in the demo
+    window.app = {
+      user: { username: 'admin', role: 'admin' },
+      currentServerId: 1,
+      settings: {},
+      navigate: function (view) {
+        if (window.location.hash.replace('#', '') === view) return;
+        window.location.hash = view;
+        this.toast('Navigated to ' + view, 'info');
+      },
+      handleRoute: function () {},
+      toggleTheme: function () {},
+      toggleMobileSidebar: function () {},
+      showServerSwitcherModal: function () { window.TGUX && window.TGUX.openPalette('server'); },
+      toast: function (message, type) {
+        var box = document.getElementById('toast-container');
+        if (!box) return;
+        var colors = { success: '#34d399', error: '#fb7185', warning: '#fbbf24', info: '#22d3ee' };
+        var el = document.createElement('div');
+        el.style.cssText = 'min-width:240px;max-width:320px;padding:13px 16px;border-radius:16px;background:rgba(15,20,32,.96);border:1px solid rgba(148,163,184,.2);border-left:3px solid ' + (colors[type] || colors.info) + ';box-shadow:0 18px 40px rgba(0,0,0,.5);color:#eef3fb;font:12px/1.5 Inter,system-ui;pointer-events:auto;animation:ux-toast-in 300ms ease both';
+        el.innerHTML = '<strong style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:' + (colors[type] || colors.info) + ';margin-bottom:3px">' + String(type || 'info') + '</strong>' + String(message).replace(/[<>&]/g, '');
+        box.appendChild(el);
+        setTimeout(function () { el.style.transition = 'opacity .25s, transform .25s'; el.style.opacity = '0'; el.style.transform = 'translateX(20px)'; setTimeout(function () { el.remove(); }, 260); }, 3600);
+      }
+    };
+    window.auth = { logout: function () { window.app.toast('Sign out (preview only)', 'info'); }, closeModal: function () { document.getElementById('modal-container').innerHTML = ''; } };
+
+    // Demo servers for the command palette.
+    window.__previewServers = [
+      { id: 1, name: 'Survival SMP', node: 'eu-01' },
+      { id: 2, name: 'Creative Hub', node: 'eu-01' },
+      { id: 3, name: 'Discord Bot', node: 'eu-02' }
+    ];
+    window.addEventListener('hashchange', function () {
+      var view = window.location.hash.replace('#', '') || 'user-overview';
+      document.querySelectorAll('.nook-nav-item').forEach(function (a) {
+        a.classList.toggle('active', a.id === 'nav-' + view);
+      });
+    });
+  </script>
+
+  <script src="/js/ux.js?v=4.0.0"></script>
+  <script>
+    // Paint all icons with the offline icon set bundled in the UX engine.
+    document.querySelectorAll('[data-icon]').forEach(function (el) {
+      el.innerHTML = window.TGUX ? window.TGUX.icon(el.getAttribute('data-icon')) : '';
+    });
+    // Theme toggle should repaint its own icon too.
+    var themeBtn = document.getElementById('header-theme-toggle-btn');
+    if (themeBtn) {
+      new MutationObserver(function () {
+        var svg = themeBtn.querySelector('svg');
+        if (svg) { svg.style.width = '16px'; svg.style.height = '16px'; }
+      }).observe(themeBtn, { childList: true, subtree: true });
+    }
+    // Register the demo servers as first-class palette commands.
+    // Mobile drawer behaviour.
+    document.querySelectorAll('#main-sidebar a').forEach(function (a) {
+      a.addEventListener('click', function () { document.body.classList.remove('pv-sidebar-open'); });
+    });
+    document.getElementById('main-content').addEventListener('click', function () {
+      document.body.classList.remove('pv-sidebar-open');
+    });
+
+    window.__previewServers.forEach(function (s) {
+      window.TGUX.registerCommand({
+        label: s.name,
+        hint: 'Demo server · ' + s.node + ' · #' + s.id,
+        group: 'Servers',
+        icon: 'server',
+        keywords: s.name + ' ' + s.node + ' server',
+        run: function () { window.app.toast('Opening ' + s.name + ' console (preview)', 'info'); }
+      });
+    });
+  </script>
+</body>
+</html>
